@@ -1,5 +1,6 @@
 #include "read_input_file.h"
 #include <fstream>
+#include <iostream>
 
 void read_input_file(const string s, MatrixXf *lm, MatrixXf *wp) 
 {

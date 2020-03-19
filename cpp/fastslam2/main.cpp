@@ -14,7 +14,10 @@ int main (int argc, char *argv[])
 	MatrixXf lm; //landmark positions
 	MatrixXf wp; //way points
 
-	read_input_file("example_webmap.mat", &lm, &wp);
+	if (argc < 2)
+		return -1;
+
+	read_input_file(argv[1], &lm, &wp);
 	vector<Particle> data = fastslam2_sim(lm,wp);
 	for (int i=0; i<data.size(); i++) {
 		cout<<"particle i="<<i<<endl;
