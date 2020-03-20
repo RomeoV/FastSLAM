@@ -14,12 +14,13 @@ public:
 	~Particle();
         
 	//getters	
-	float w() const;
-	VectorXf xv() const; //robot pose: x,y,theta (heading dir)
-	MatrixXf Pv() const; //controls: velocities
-	vector<VectorXf> xf() const; //2d means of EKF
-	vector<MatrixXf> Pf() const; //covariance matrices for EKF 
-	float* da() const; //
+	float w() const; ///< importance weight
+	VectorXf xv() const; ///< robot pose: x,y,theta (heading dir)
+	MatrixXf Pv() const; ///< control inputs, i.e. velocities
+	vector<VectorXf> xf() const; ///< 2d means of EKF
+	vector<MatrixXf> Pf() const; ///< covariance matrices for EKF 
+															 ///< length is equal to seen landmarks at time t
+	float* da() const; ///< "Not sure, it's never used" (taken from readme)
 
 	//setters
 	void setW(float w);
