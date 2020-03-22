@@ -68,7 +68,7 @@ function(fslam_add_test source_file)
     )
   add_dependencies(check ${executable}Exec)
 
-  add_test(NAME FS1_Gtests
+  add_test(NAME GTEST_${executable}
     COMMAND ${executable}
     )
 
