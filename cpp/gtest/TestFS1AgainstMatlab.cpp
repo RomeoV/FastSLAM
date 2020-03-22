@@ -134,12 +134,12 @@ TEST(FASTSLAM_TEST,predict_test){
     VectorXf xv(3);
     xv.setZero();
 
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     vector<MatrixXf> Pf;
 
     float Vn = 3.0194;
     float Gn = 0.0227;
-    MatrixXf Qe(2,2);
+    Matrix2f Qe(2,2);
     Qe<< 0.0900, 0,
 	0,0.0027;
 
@@ -294,7 +294,7 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
     VectorXf xv(3);
     xv << 1.3393, -0.1241, -0.0278;
 
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     VectorXf a(2);
     a<<3.4924 ,-25.7649;
     VectorXf b(2);
@@ -398,7 +398,7 @@ TEST(FASTSLAM_TEST,compute_weight_test)
     xv << 1.2746 ,-0.1712 ,-0.0380;
 
     //xf
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     VectorXf a(2);
     a<<3.7387,-25.7130;
     VectorXf b(2);
@@ -458,7 +458,7 @@ TEST(FASTSLAM_TEST,feature_update_test)
     xv << 1.3010, -0.1420, -0.0315;
 
     //xf
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     VectorXf a(2);
     a<<2.7368,-25.5656;
     VectorXf b(2);
@@ -514,7 +514,7 @@ TEST(FASTSLAM_TEST,feature_update_test)
     xv_gt<< 1.3010, -0.1420, -0.0315;
 
     //xf_gt
-    vector<VectorXf> xf_gt;
+    vector<Vector2f> xf_gt;
     VectorXf g(2);
     g<<2.5430,-25.5796;
     VectorXf h(2);
@@ -548,7 +548,7 @@ TEST(FASTSLAM_TEST,add_feature_test)
     xv<<0.6981, -0.0280,-0.0067;
 
     //xf
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
 
     //Pf
     vector<MatrixXf> Pf;
@@ -714,7 +714,7 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
    -0.0000126, 0.0000369, 0.0000086;
 
     //xf
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     VectorXf a(2);
     a<<2.4261,-25.8041;
     VectorXf b(2);
@@ -771,7 +771,7 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     MatrixXf Pv_gt(3,3);
     Pv_gt.setZero();    
 
-    vector<VectorXf> xf_gt;
+    vector<Vector2f> xf_gt;
     VectorXf e(2);
     a<<2.4261,-25.8041;
     VectorXf f(2);
@@ -810,7 +810,7 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     Pv.setZero();
 
     //xf
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     VectorXf a(2);
     a<<2.4261,-25.8041;
     VectorXf b(2);

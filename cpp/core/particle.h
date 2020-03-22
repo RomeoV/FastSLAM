@@ -10,14 +10,14 @@ using namespace std;
 class Particle{
 public:
 	Particle();
-	Particle(float w, VectorXf &xv, MatrixXf &Pv, vector<VectorXf> &xf, vector<MatrixXf> &Pf, float* da);
+	Particle(float w, VectorXf &xv, MatrixXf &Pv, vector<Vector2f> &xf, vector<MatrixXf> &Pf, float* da);
 	~Particle();
         
 	//getters	
 	float w() const; ///< importance weight
 	VectorXf xv() const; ///< robot pose: x,y,theta (heading dir)
 	MatrixXf Pv() const; ///< control inputs, i.e. velocities
-	vector<VectorXf> xf() const; ///< 2d means of EKF
+	vector<Vector2f> xf() const; ///< 2d means of EKF
 	vector<MatrixXf> Pf() const; ///< covariance matrices for EKF 
 															 ///< length is equal to seen landmarks at time t
 	float* da() const; ///< "Not sure, it's never used" (taken from readme)
@@ -26,8 +26,8 @@ public:
 	void setW(float w);
 	void setXv(VectorXf &xv);
 	void setPv(MatrixXf &Pv);
-	void setXf(vector<VectorXf> &xf);
-	void setXfi(int i, VectorXf &vec);
+	void setXf(vector<Vector2f> &xf);
+	void setXfi(int i, Vector2f &vec);
 	void setPf(vector<MatrixXf> &Pf);
 	void setPfi(int i, MatrixXf &m);
 	void setDa(float* da);
@@ -36,7 +36,7 @@ private:
 	float _w;
 	VectorXf _xv;
 	MatrixXf _Pv;		
-	vector<VectorXf> _xf;
+	vector<Vector2f> _xf;
 	vector<MatrixXf> _Pf;
 	float* _da;
 };

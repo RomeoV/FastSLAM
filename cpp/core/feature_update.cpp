@@ -8,7 +8,7 @@ void feature_update(Particle &particle, vector<VectorXf> z, vector<int>idf, Matr
 {
     //Having selected a new pose from the proposal distribution, this pose is assumed perfect and each feature update maybe computed independently and without pose uncertainty
     int rows = 2; //2d mean for EKF
-	vector<VectorXf> xf; //updated EKF means
+    vector<Vector2f> xf; //updated EKF means
     vector<MatrixXf> Pf; //updated EKF covariances
 
 	for (unsigned i=0; i<idf.size(); i++) {

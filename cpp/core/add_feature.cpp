@@ -11,7 +11,7 @@ using namespace std;
 void add_feature(Particle &particle, vector<VectorXf> z, MatrixXf R)
 {
     int lenz = z.size();
-    vector<VectorXf> xf;
+    vector<Vector2f> xf;
     vector<MatrixXf> Pf;
     VectorXf xv = particle.xv();
 

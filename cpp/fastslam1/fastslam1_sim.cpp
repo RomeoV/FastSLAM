@@ -100,13 +100,13 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	//Predict step	
 	for (unsigned int i=0; i< NPARTICLES; i++) {
 	    predict(particles[i],Vn,Gn,Qe,WHEELBASE,dt,SWITCH_PREDICT_NOISE);
-	    if (SWITCH_HEADING_KNOWN) {
-		for (int j=0; j< particles[i].xf().size(); j++) {
-		    VectorXf xf_j = particles[i].xf()[j];
-		    xf_j[2] = xtrue[2];
-		    particles[i].setXfi(j,xf_j);	
-		}           
-	    }
+	    /* if (SWITCH_HEADING_KNOWN) { */
+		/* for (int j=0; j< particles[i].xf().size(); j++) { */
+		    /* Vector2f xf_j = particles[i].xf()[j]; */
+		    /* xf_j[2] = xtrue[2]; */
+		    /* particles[i].setXfi(j,xf_j); */	
+		/* } */           
+	    /* } */
 	}
 
 	//Observe step
