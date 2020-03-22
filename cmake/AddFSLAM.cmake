@@ -52,7 +52,8 @@ endfunction(fslam_enable_testing)
 function(fslam_add_test source_file)
   string(REGEX REPLACE "^([A-Za-z0-9_]*)\\.([A-Za-z0-9]*)" "\\1" executable "${source_file}")
 
-  add_executable(${executable} EXCLUDE_FROM_ALL ${source_file} )
+  # add_executable(${executable} EXCLUDE_FROM_ALL ${source_file} )
+  add_executable(${executable} ${source_file} )
   target_link_libraries( ${executable} gtest )
   foreach(lib ${FSLAM_USED_LIBS})
     target_link_libraries( ${executable} ${lib} )
@@ -66,6 +67,10 @@ function(fslam_add_test source_file)
     DEPENDS ${executable}
     )
   add_dependencies(check ${executable}Exec)
+
+  add_test(NAME FS1_Gtests
+    COMMAND ${executable}
+    )
 
   if ( MKL_LIBRARIES )
     target_link_libraries( ${executable} ${MKL_LIBRARIES} )
