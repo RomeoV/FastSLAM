@@ -9,6 +9,7 @@ set(FSLAM_USED_LIBS FastSLAM1 FastSLAM2 FastSLAM_core ${CMAKE_THREAD_LIBS_INIT})
 
 # Tests
 fslam_add_test(TestFS1AgainstMatlab.cpp)
+fslam_add_test(TestMatrixResizes.cpp)
 
 # Support Files
 file(COPY ${CMAKE_SOURCE_DIR}/cpp/gtest/example_webmap.mat DESTINATION ${CMAKE_BINARY_DIR}/cpp/gtest/)
