@@ -11,7 +11,7 @@ namespace config {
 		extern float V;
 		extern float MAXG;
 		extern float RATEG;
-		extern int WHEELBASE;
+		extern float WHEELBASE;
 		extern float DT_CONTROLS;
 
 		extern float sigmaV;
