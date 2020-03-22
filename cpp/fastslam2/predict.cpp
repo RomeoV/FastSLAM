@@ -31,7 +31,7 @@ void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, i
 		dt*sin(G)/WB, V*dt*cos(G)/WB;
 
 	//predict covariance
-	MatrixXf newPv;//(Pv.rows(),Pv.cols());
+	Matrix3f newPv;//(Pv.rows(),Pv.cols());
         
         //TODO: Pv here is somehow corrupted. Probably in sample_proposal
         #if 0
@@ -54,7 +54,7 @@ void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, i
 	}	
 
 	//predict state
-	VectorXf xv_temp(3);
+	Vector3f xv_temp(3);
         xv_temp << xv(0) + V*dt*cos(G+xv(2)),
 	           xv(1) + V*dt*sin(G+xv(2)),
 	           pi_to_pi2(xv(2) + V*dt*sin(G/WB));

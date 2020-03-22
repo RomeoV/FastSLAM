@@ -20,8 +20,8 @@ void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, i
 	}	
 
 	//predict state
-	VectorXf xv = particle.xv();
-	VectorXf xv_temp(3);
+	Vector3f xv = particle.xv();
+	Vector3f xv_temp(3);
 	xv_temp << xv(0) + V*dt*cos(G+xv(2)),
 			xv(1) + V*dt*sin(G+xv(2)),
 			pi_to_pi2(xv(2) + V*dt*sin(G/WB));

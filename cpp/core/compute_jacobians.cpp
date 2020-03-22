@@ -15,7 +15,7 @@ void compute_jacobians(Particle particle,
 
 	int rows = particle.xf().size();
 	vector<VectorXf> xf;
-	vector<MatrixXf> Pf;
+	vector<Matrix2f> Pf;
 
 	unsigned i;
 	int r;

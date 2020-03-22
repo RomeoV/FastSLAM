@@ -152,12 +152,12 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	    if (!zn.empty()) {
 		for (unsigned i=0; i<NPARTICLES; i++) {
 		    if (zf.empty()) { //sample from proposal distribution if we have not already done so above
-			VectorXf xv = multivariate_gauss(particles[i].xv(),
+			Vector3f xv = multivariate_gauss(particles[i].xv(),
 				particles[i].Pv(),1);
 
 			assert(isfinite(particles[i].w()));
 			particles[i].setXv(xv);
-			MatrixXf pv(3,3); 
+			Matrix3f pv(3,3); 
 			pv.setZero();
 			particles[i].setPv(pv); 
 		    }

@@ -131,11 +131,11 @@ TEST(FASTSLAM_TEST,add_control_noise_test) {
 
 TEST(FASTSLAM_TEST,predict_test){
     float w = 0.01;
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv.setZero();
 
     vector<Vector2f> xf;
-    vector<MatrixXf> Pf;
+    vector<Matrix2f> Pf;
 
     float Vn = 3.0194;
     float Gn = 0.0227;
@@ -161,7 +161,7 @@ TEST(FASTSLAM_TEST,predict_test){
     VectorXf xv_after(3);
     xv_after<<0.0755,0.0017,0.0004;
     vector<VectorXf> xf_out;
-    vector<MatrixXf> Pf_out;
+    vector<Matrix2f> Pf_out;
 
     //EXPECT_NE(w_after, particle.w());
     EXPECT_NE(xv_after[0], particle.xv()[0]);
@@ -218,7 +218,7 @@ TEST(FASTSLAM_TEST,add_observation_noise_test)
     z.push_back(a);
     z.push_back(b);
 
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<<0.0100, 0,
 	0, 0.0003;
 
@@ -291,7 +291,7 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
 {
     float w = 0.01;
 
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv << 1.3393, -0.1241, -0.0278;
 
     vector<Vector2f> xf;
@@ -302,11 +302,11 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
     xf.push_back(a);
     xf.push_back(b);
 
-    vector<MatrixXf> Pf;
-    MatrixXf c(2,2);
+    vector<Matrix2f> Pf;
+    Matrix2f c(2,2);
     c<< 0.2016,0.0210,
 	0.0210, 0.0123;
-    MatrixXf d(2,2);
+    Matrix2f d(2,2);
     d<< 0.0146, -0.0288,
 	-0.0288, 0.1898;
     Pf.push_back(c);
@@ -324,7 +324,7 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
     idf.push_back(0);
     idf.push_back(1);
 
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
 
@@ -394,7 +394,7 @@ TEST(FASTSLAM_TEST,compute_weight_test)
     float w = 0.01;
 
     //xv
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv << 1.2746 ,-0.1712 ,-0.0380;
 
     //xf
@@ -407,11 +407,11 @@ TEST(FASTSLAM_TEST,compute_weight_test)
     xf.push_back(b);
 
     //Pf
-    vector<MatrixXf> Pf;
-    MatrixXf c(2,2);
+    vector<Matrix2f> Pf;
+    Matrix2f c(2,2);
     c<<0.2005, 0.0230,
 	0.0230,0.0128;
-    MatrixXf d(2,2);
+    Matrix2f d(2,2);
     d<<0.0124, -0.0211,
 	-0.0211,0.1953;
     Pf.push_back(c);
@@ -439,7 +439,7 @@ TEST(FASTSLAM_TEST,compute_weight_test)
     idf.push_back(1);
 
     //R
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
 
@@ -454,7 +454,7 @@ TEST(FASTSLAM_TEST,feature_update_test)
     float w = 2.6993;
 
     //xv
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv << 1.3010, -0.1420, -0.0315;
 
     //xf
@@ -467,11 +467,11 @@ TEST(FASTSLAM_TEST,feature_update_test)
     xf.push_back(b);
 
     //Pf
-    vector<MatrixXf> Pf;
-    MatrixXf c(2,2);
+    vector<Matrix2f> Pf;
+    Matrix2f c(2,2);
     c<<0.1983, 0.0155,
 	0.0155,0.0113;
-    MatrixXf d(2,2);
+    Matrix2f d(2,2);
     d<<0.0119, -0.0187,
 	-0.0187,0.1958;
     Pf.push_back(c);
@@ -499,7 +499,7 @@ TEST(FASTSLAM_TEST,feature_update_test)
     idf.push_back(1);
 
     //R
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
 
@@ -523,11 +523,11 @@ TEST(FASTSLAM_TEST,feature_update_test)
     xf_gt.push_back(h);
 
     //Pf_gt
-    vector<MatrixXf> Pf_gt;
-    MatrixXf i(2,2);
+    vector<Matrix2f> Pf_gt;
+    Matrix2f i(2,2);
     i<< 0.0985, 0.0065,
 	0.0065, 0.0055;
-    MatrixXf j(2,2);
+    Matrix2f j(2,2);
     j<< 0.0060, -0.0094,
 	-0.0094,0.0953;
     Pf_gt.push_back(i);
@@ -544,14 +544,14 @@ TEST(FASTSLAM_TEST,add_feature_test)
 {
     float w=0.0100;
     //xv
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv<<0.6981, -0.0280,-0.0067;
 
     //xf
     vector<Vector2f> xf;
 
     //Pf
-    vector<MatrixXf> Pf;
+    vector<Matrix2f> Pf;
 
     //particle
     Particle particle = Particle();
@@ -570,7 +570,7 @@ TEST(FASTSLAM_TEST,add_feature_test)
     zn.push_back(b);  
 
     //R
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
 
@@ -593,11 +593,11 @@ TEST(FASTSLAM_TEST,add_feature_test)
     xf_out.push_back(d);
 
     //Pf out 
-    vector<MatrixXf> Pf_out;
-    MatrixXf e(2,2);
+    vector<Matrix2f> Pf_out;
+    Matrix2f e(2,2);
     e<<0.2009, 0.0192,
 	0.0192,0.0119;
-    MatrixXf f(2,2);
+    Matrix2f f(2,2);
     f<<0.0123, -0.0206,
 	-0.0206, 0.1911;
     Pf_out.push_back(e);
@@ -704,11 +704,11 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     float w = 0.01;
 
     //xv
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv << 1.2767, -0.1756, -0.0394;
 
     //Pv
-    MatrixXf Pv(3,3);
+    Matrix3f Pv(3,3);
     Pv<< 0.0004927, -0.0000653, -0.0000126,
    -0.0000653, 0.0001592, 0.0000369,
    -0.0000126, 0.0000369, 0.0000086;
@@ -723,11 +723,11 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     xf.push_back(b);
 
     //Pf
-    vector<MatrixXf> Pf;
-    MatrixXf c(2,2);
+    vector<Matrix2f> Pf;
+    Matrix2f c(2,2);
     c<< 0.2019, 0.0133,
 	0.0133, 0.0109;
-    MatrixXf d(2,2);
+    Matrix2f d(2,2);
     d <<0.0131, -0.0239,
 	-0.0239, 0.1915;
     Pf.push_back(c);
@@ -756,7 +756,7 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     idf.push_back(1);
 
     //R
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
 
@@ -768,7 +768,7 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     VectorXf xv_gt(3);
     xv_gt<< 1.2935, -0.1718, -0.0387;
 
-    MatrixXf Pv_gt(3,3);
+    Matrix3f Pv_gt(3,3);
     Pv_gt.setZero();    
 
     vector<Vector2f> xf_gt;
@@ -779,11 +779,11 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     xf_gt.push_back(a);
     xf_gt.push_back(b);
  
-    vector<MatrixXf> Pf_gt;
-    MatrixXf g(2,2);
+    vector<Matrix2f> Pf_gt;
+    Matrix2f g(2,2);
     c<< 0.2019, 0.0133,
 	0.0133, 0.0109;
-    MatrixXf h(2,2);
+    Matrix2f h(2,2);
     d <<0.0131, -0.0239,
 	-0.0239, 0.1915;
     Pf_gt.push_back(c);
@@ -802,11 +802,11 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     float w = 0.01;
 
     //xv
-    VectorXf xv(3);
+    Vector3f xv(3);
     xv << 1.2919, -0.1874,-0.0423;
 
     //Pv
-    MatrixXf Pv(3,3);
+    Matrix3f Pv(3,3);
     Pv.setZero();
 
     //xf
@@ -819,11 +819,11 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     xf.push_back(b);
 
     //Pf
-    vector<MatrixXf> Pf;
-    MatrixXf c(2,2);
+    vector<Matrix2f> Pf;
+    Matrix2f c(2,2);
     c<< 0.2019, 0.0133,
 	0.0133, 0.0109; 
-    MatrixXf d(2,2);
+    Matrix2f d(2,2);
     d<< 0.0131, -0.0239,
 	-0.0239,0.1915;
     Pf.push_back(c);
@@ -851,7 +851,7 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     idf.push_back(1);
 
     //R
-    MatrixXf R(2,2);
+    Matrix2f R(2,2);
     R<< 0.0100, 0,
 	0, 0.0003;
    
@@ -865,7 +865,7 @@ TEST(FASTSLAM_TEST, DISABLED_gauss_evaluate_test)
     VectorXf v(3);
     v<<-0.0480,-0.0286,-0.0069;
 
-    MatrixXf Pv0(3,3);
+    Matrix3f Pv0(3,3);
     Pv0<<0.0004977,-0.0000494, -0.0000091,
    -0.0000494,0.0001815,0.0000418,
    -0.0000091,0.0000418,0.0000097;
@@ -888,7 +888,7 @@ TEST(FASTSLAM_TEST, DISABLED_gauss_evaluate_test)
     VectorXf v(2);
     v<< -1.18453, 1.62279;
     
-    MatrixXf Sf(2,2);
+    Matrix2f Sf(2,2);
     Sf<<0.020094, -0.000184015,
     -0.000184015,  0.000607922;
 
@@ -903,7 +903,7 @@ TEST(FASTSLAM_TEST, DISABLED_multivariate_gauss_test)
     VectorXf x(2);
     x<< 3.0000, -0.0087;
 
-    MatrixXf P(2,2);
+    Matrix2f P(2,2);
     P<< 0.09, 0,
          0, 0.0027;
 
@@ -974,7 +974,7 @@ TEST(FASTSLAM_TEST, DISABLED_misc_test)
     EXPECT_EQ(newW, w_gt);
 
     #if 0
-    //MatrixXf P;
+    //Matrix2f P;
     float total =0;
     float particle_w= 1.28907*pow(10.0f,30.0f);
     float like = 3135.09;

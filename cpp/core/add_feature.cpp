@@ -12,7 +12,7 @@ void add_feature(Particle &particle, vector<VectorXf> z, MatrixXf R)
 {
     int lenz = z.size();
     vector<Vector2f> xf;
-    vector<MatrixXf> Pf;
+    vector<Matrix2f> Pf;
     VectorXf xv = particle.xv();
 
     float r,b,s,c;

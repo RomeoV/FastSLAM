@@ -9,11 +9,11 @@
 void sample_proposal(Particle &particle, vector<VectorXf> z, vector<int> idf, MatrixXf R)
 {
     assert(isfinite(particle.w()));
-    VectorXf xv = VectorXf(particle.xv()); //robot position
-    MatrixXf Pv = MatrixXf(particle.Pv()); //controls (motion command)
+    Vector3f xv = VectorXf(particle.xv()); //robot position
+    Matrix3f Pv = MatrixXf(particle.Pv()); //controls (motion command)
 
-    VectorXf xv0 = VectorXf(xv);
-    MatrixXf Pv0 = MatrixXf(Pv);	
+    Vector3f xv0 = Vector3f(xv);
+    Matrix3f Pv0 = Matrix3f(Pv);	
 
     vector<MatrixXf> Hv;
     vector<MatrixXf> Hf;
@@ -58,9 +58,9 @@ void sample_proposal(Particle &particle, vector<VectorXf> z, vector<int> idf, Ma
     }
 
     //sample from proposal distribution
-    VectorXf xvs = multivariate_gauss(xv,Pv,1); 
+    Vector3f xvs = multivariate_gauss(xv,Pv,1); 
     particle.setXv(xvs);
-    MatrixXf zeros(3,3);
+    Matrix3f zeros(3,3);
     zeros.setZero();
     particle.setPv(zeros);
 
