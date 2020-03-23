@@ -3,5 +3,5 @@ test/**/*
 *~
 *.o
 exec
-build
+build*
 .DS_Store
