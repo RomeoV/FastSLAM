@@ -45,7 +45,7 @@ endif(ENABLE_RPATHS)
 include(AddFSLAM)
 find_package(Eigen3 REQUIRED)
 find_package(GooglePerfTools)
-find_package(OpenCL REQUIRED)
+# find_package(OpenCL REQUIRED)
 
 #Find Boost
 #FIND_PACKAGE(Boost)
@@ -95,4 +95,4 @@ enable_testing()
 add_subdirectory(cpp/gtest)
 
 # Adding test directories
-add_subdirectory(testcode)
+# add_subdirectory(testcode)
