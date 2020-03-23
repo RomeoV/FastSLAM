@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void KF_joseph_update(Vector3f &x, Matrix3f &P,float v,float R, MatrixXf H)
+void KF_joseph_update(Vector3f &x, Matrix3f &P,float v,float R, Matrix13f H)
 {
     VectorXf PHt = P*H.transpose();
     MatrixXf S = H*PHt;
@@ -15,13 +15,13 @@ void KF_joseph_update(Vector3f &x, Matrix3f &P,float v,float R, MatrixXf H)
     PSD_check.transpose();
     PSD_check.conjugate();
 
-    VectorXf W = PHt*Si;
+    Vector3f W = PHt*Si;
     x = x+W*v;
     
     //Joseph-form covariance update
-    MatrixXf eye(P.rows(), P.cols());
+    Matrix3f eye(P.rows(), P.cols());
     eye.setIdentity();
-    MatrixXf C = eye - W*H;
+    Matrix3f C = eye - W*H;
     P = C*P*C.transpose() + W*R*W.transpose();  
 
     float eps = 2.2204*pow(10.0,-16); //numerical safety 

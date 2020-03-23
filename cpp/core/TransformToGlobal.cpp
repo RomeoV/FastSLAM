@@ -1,10 +1,10 @@
 #include "TransformToGlobal.h"
 #include "pi_to_pi.h"
 
-void TransformToGlobal(MatrixXf &p, VectorXf b) 
+void TransformToGlobal(MatrixXf &p, Vector3f b) 
 {
 	//rotate
-	MatrixXf rot(2,2);
+	Matrix2f rot(2,2);
 	rot<<cos(b(2)), -sin(b(2)), sin(b(2)), cos(b(2));
 	
 	MatrixXf p_resized;

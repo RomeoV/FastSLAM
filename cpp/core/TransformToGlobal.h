@@ -6,6 +6,6 @@
 
 using namespace Eigen;
 
-void TransformToGlobal(MatrixXf &p, VectorXf b);
+void TransformToGlobal(MatrixXf &p, Vector3f b);
 
 #endif //TRANSFORMGLOBAL_H

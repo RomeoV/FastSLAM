@@ -17,7 +17,7 @@ using namespace std;
 * @param maxG - max steering angle (rad)
 * @param dt - timestep
 **/
-void compute_steering(VectorXf x, MatrixXf wp, int& iwp, float minD, 
+void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD, 
 				float& G, float rateG, float maxG, float dt)
 {
 

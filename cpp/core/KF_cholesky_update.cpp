@@ -1,18 +1,18 @@
 #include "KF_cholesky_update.h"
 
-void KF_cholesky_update(Vector2f &x, Matrix2f &P,VectorXf v,MatrixXf R,MatrixXf H)
+void KF_cholesky_update(Vector2f &x, Matrix2f &P,Vector2f v,Matrix2f R,Matrix2f H)
 {
-    MatrixXf PHt = P*H.transpose();
-    MatrixXf S = H*PHt + R;
+    Matrix2f PHt = P*H.transpose();
+    Matrix2f S = H*PHt + R;
     
     S = (S+S.transpose()) * 0.5; //make symmetric
-    MatrixXf SChol = S.llt().matrixL();
+    Matrix2f SChol = S.llt().matrixL();
     SChol.transpose();
     SChol.conjugate();
 
-    MatrixXf SCholInv = SChol.inverse(); //tri matrix
-    MatrixXf W1 = PHt * SCholInv;
-    MatrixXf W = W1 * SCholInv.transpose();
+    Matrix2f SCholInv = SChol.inverse(); //tri matrix
+    Matrix2f W1 = PHt * SCholInv;
+    Matrix2f W = W1 * SCholInv.transpose();
 
     x = x + W*v;
     P = P - W1*W1.transpose();

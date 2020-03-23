@@ -17,7 +17,7 @@ namespace config {
 		extern float sigmaV;
 		extern float sigmaG;
 
-		extern Eigen::MatrixXf Q;
+		extern Eigen::Matrix2f Q;
 
 		extern float MAX_RANGE;
 		extern float DT_OBSERVE;
@@ -25,7 +25,7 @@ namespace config {
 		extern float sigmaR;
 		extern float sigmaB;
 		
-		extern Eigen::MatrixXf R;
+		extern Eigen::Matrix2f R;
 
 		extern float AT_WAYPOINT;
 		extern int NUMBER_LOOPS;

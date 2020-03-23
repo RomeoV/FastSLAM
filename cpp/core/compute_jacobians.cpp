@@ -5,16 +5,16 @@
 
 void compute_jacobians(Particle particle, 
 		vector<int> idf, 
-		MatrixXf R, 
-		vector<VectorXf> &zp, //measurement (range, bearing)
-		vector<MatrixXf> *Hv, // jacobians of function h (deriv of h wrt pose)
-		vector<MatrixXf> *Hf, // jacobians of function h (deriv of h wrt mean)
-		vector<MatrixXf> *Sf) //measurement covariance
+		Matrix2f R, 
+		vector<Vector2f> &zp, //measurement (range, bearing)
+		vector<Matrix23f> *Hv, // jacobians of function h (deriv of h wrt pose)
+		vector<Matrix2f> *Hf, // jacobians of function h (deriv of h wrt mean)
+		vector<Matrix2f> *Sf) //measurement covariance
 {
-	VectorXf xv = particle.xv();
+	Vector3f xv = particle.xv();
 
 	int rows = particle.xf().size();
-	vector<VectorXf> xf;
+	vector<Vector2f> xf;
 	vector<Matrix2f> Pf;
 
 	unsigned i;
@@ -25,8 +25,8 @@ void compute_jacobians(Particle particle,
 	}
 
 	float dx,dy,d2,d;
-	MatrixXf HvMat(2,3);
-	MatrixXf HfMat (2,2);
+	Matrix23f HvMat(2,3);
+	Matrix2f HfMat (2,2);
 
 	for (i=0; i<idf.size(); i++) {
 		dx = xf[i](0) - xv(0);
@@ -34,7 +34,7 @@ void compute_jacobians(Particle particle,
 		d2 = pow(dx,2) + pow(dy,2);	
 		d = sqrt(d2);
 
-		VectorXf zp_vec(2);
+		Vector2f zp_vec(2);
 		
 		//predicted observation
 		zp_vec[0] = d;
@@ -54,7 +54,7 @@ void compute_jacobians(Particle particle,
 		Hf->push_back(HfMat);
 
 		//innovation covariance of feature observation given the vehicle'
-		MatrixXf SfMat = HfMat*Pf[i]*HfMat.transpose() + R; 
+		Matrix2f SfMat = HfMat*Pf[i]*HfMat.transpose() + R; 
 		Sf->push_back(SfMat);      
 	}			
 }

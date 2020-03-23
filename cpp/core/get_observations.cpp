@@ -2,13 +2,13 @@
 #include <iostream>
 #include <math.h>
 
-vector<VectorXf> get_observations(VectorXf x, MatrixXf lm, vector<int> &idf, float rmax)
+vector<Vector2f> get_observations(Vector3f x, MatrixXf lm, vector<int> &idf, float rmax)
 {
 	get_visible_landmarks(x,lm,idf,rmax);
 	return compute_range_bearing(x,lm);	
 }
 
-void get_visible_landmarks(VectorXf x, MatrixXf &lm, vector<int> &idf, float rmax)
+void get_visible_landmarks(Vector3f x, MatrixXf &lm, vector<int> &idf, float rmax)
 {
 	//select set of landmarks that are visible within vehicle's 
 	//semi-circular field of view
@@ -41,7 +41,7 @@ void get_visible_landmarks(VectorXf x, MatrixXf &lm, vector<int> &idf, float rma
 	}
 }
 
-vector<VectorXf> compute_range_bearing(VectorXf x, MatrixXf lm) 
+vector<Vector2f> compute_range_bearing(Vector3f x, MatrixXf lm) 
 {
 	vector<float> dx; 
 	vector<float> dy;
@@ -55,10 +55,10 @@ vector<VectorXf> compute_range_bearing(VectorXf x, MatrixXf lm)
 	assert(dy.size() == lm.cols());
 
 	float phi = x(2);
-	vector<VectorXf> z;
+	vector<Vector2f> z;
 
 	for (int i =0; i<lm.cols(); i++) {
-		VectorXf zvec(2);
+		Vector2f zvec(2);
 		zvec<< sqrt(pow(dx[i],2) + pow(dy[i],2)), atan2(dy[i],dx[i]) - phi;	
 		z.push_back(zvec);
 	}

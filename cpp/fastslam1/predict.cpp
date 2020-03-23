@@ -10,10 +10,10 @@ void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, i
 {
 	//optional: add random noise to predicted state
 	if (addrandom ==1) {
-		VectorXf A(2);
+		Vector2f A(2);
 		A(0) = V;
 		A(1) = G;
-		VectorXf VG(2);
+		Vector2f VG(2);
 		VG = multivariate_gauss(A,Q,1);	
 		V = VG(0);
 		G = VG(1);	

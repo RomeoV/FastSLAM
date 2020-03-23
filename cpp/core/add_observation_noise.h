@@ -13,6 +13,6 @@ namespace nRandMat{
 	MatrixXf rand(int m, int n); 
 }
 
-void add_observation_noise(vector<VectorXf> &z, MatrixXf R, int addnoise);
+void add_observation_noise(vector<Vector2f> &z, Matrix2f R, int addnoise);
 
 #endif //ADD_OBSERVATION_NOISE_H

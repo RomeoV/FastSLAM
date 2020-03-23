@@ -4,7 +4,7 @@
 using namespace std;
 
 //z is the list of measurements conditioned on the particle.
-void feature_update(Particle &particle, vector<VectorXf> z, vector<int>idf, MatrixXf R)
+void feature_update(Particle &particle, vector<Vector2f> z, vector<int>idf, Matrix2f R)
 {
     //Having selected a new pose from the proposal distribution, this pose is assumed perfect and each feature update maybe computed independently and without pose uncertainty
     int rows = 2; //2d mean for EKF
@@ -16,22 +16,22 @@ void feature_update(Particle &particle, vector<VectorXf> z, vector<int>idf, Matr
 		Pf.push_back(particle.Pf()[idf[i]]); //covariances
 	}	
 	
-	vector<VectorXf> zp;
-    vector<MatrixXf> Hv;
-    vector<MatrixXf> Hf;
-    vector<MatrixXf> Sf;
+    vector<Vector2f> zp;
+    vector<Matrix23f> Hv;
+    vector<Matrix2f> Hf;
+    vector<Matrix2f> Sf;
     
 	compute_jacobians(particle,idf,R,zp,&Hv,&Hf,&Sf);
 
-	vector<VectorXf> v; //difference btw two measurements (used to update mean)
+	vector<Vector2f> v; //difference btw two measurements (used to update mean)
 	for (int i=0; i<z.size(); i++) {
-		VectorXf measure_diff = z[i] - zp[i];
+		Vector2f measure_diff = z[i] - zp[i];
 		measure_diff[1] = pi_to_pi(measure_diff[1]);
 		v.push_back(measure_diff);
 	}
 
-    VectorXf vi; 
-    MatrixXf Hfi;
+    Vector2f vi; 
+    Matrix2f Hfi;
     Matrix2f Pfi;
     Vector2f xfi; 
 

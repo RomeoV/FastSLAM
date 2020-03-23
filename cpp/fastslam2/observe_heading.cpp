@@ -22,7 +22,7 @@ void observe_heading(Particle &particle, float phi, int useheading)
     Matrix3f Pv = particle.Pv();
     //cout<<"Pv"<<endl;
     //cout<<Pv<<endl;    
-    MatrixXf H(1,3);
+    Matrix13f H(1,3);
     H<<0,0,1;            
 
     float v = pi_to_pi(phi-xv(2));
