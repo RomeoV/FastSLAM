@@ -17,7 +17,7 @@ float config::DT_CONTROLS= 0.025; // seconds, time interval between control sign
 float config::sigmaV= 0.3; // m/s
 float config::sigmaG= (3.0*pi/180); // radians
 
-Eigen::MatrixXf config::Q(2,2);
+Eigen::Matrix2f config::Q(2,2);
 
 // observation parameters
 float config::MAX_RANGE= 30.0; // metres

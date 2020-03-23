@@ -7,6 +7,11 @@
 using namespace Eigen;
 using namespace std;
 
+namespace Eigen {
+	using Matrix23f = Matrix<float, 2, 3>;
+	using Matrix32f = Matrix<float, 3, 2>;
+}
+
 class Particle{
 public:
 	Particle();

@@ -53,7 +53,7 @@ MatrixXf rand(int m, int n)
 }
 #endif
 //add random measurement noise. We assume R is diagnoal matrix
-void add_observation_noise(vector<VectorXf> &z, MatrixXf R, int addnoise)
+void add_observation_noise(vector<Vector2f> &z, MatrixXf R, int addnoise)
 {
     float LO = -1.0f;
     float HI = 1.0f;

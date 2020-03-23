@@ -46,7 +46,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	particles[p].setW(uniformw);
     }
 
-    VectorXf xtrue(3);
+    Vector3f xtrue(3);
     xtrue.setZero();
 
     float dt = DT_CONTROLS; //change in time btw predicts
@@ -71,8 +71,8 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	srand(SWITCH_SEED_RANDOM);
     } 		
 
-    MatrixXf Qe = MatrixXf(Q);
-    MatrixXf Re = MatrixXf(R);
+    Matrix2f Qe = Matrix2f(Q);
+    Matrix2f Re = Matrix2f(R);
 
     if (SWITCH_INFLATE_NOISE ==1) {
 	Qe = 2*Q;
@@ -80,7 +80,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
     }
 
     vector<int> ftag_visible;
-    vector<VectorXf> z; //range and bearings of visible landmarks
+    vector<Vector2f> z; //range and bearings of visible landmarks
 
     //Main loop
     while (iwp !=-1) {
@@ -128,8 +128,8 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	    //Compute (known) data associations
 	    int Nf = particles[0].xf().size();
 	    vector<int> idf;
-	    vector<VectorXf> zf;
-	    vector<VectorXf> zn;            
+	    vector<Vector2f> zf;
+	    vector<Vector2f> zn;            
 
 	    bool testflag= false;
 	    data_associate_known(z,ftag_visible,da_table,Nf,zf,idf,zn);
@@ -160,7 +160,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 
 //rb is measurements
 //xv is robot pose
-MatrixXf make_laser_lines(vector<VectorXf> rb, VectorXf xv) 
+MatrixXf make_laser_lines(vector<Vector2f> rb, Vector3f xv) 
 {
     if (rb.empty()) {
 	return MatrixXf(0,0);

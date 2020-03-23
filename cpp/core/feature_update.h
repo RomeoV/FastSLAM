@@ -13,6 +13,6 @@ using namespace Eigen;
 using namespace std;
 
 
-void feature_update(Particle &particle, vector<VectorXf> z, vector<int>idf, MatrixXf R);
+void feature_update(Particle &particle, vector<Vector2f> z, vector<int>idf, Matrix2f R);
 
 #endif

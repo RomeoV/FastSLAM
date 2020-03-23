@@ -10,10 +10,10 @@ using namespace Eigen;
 
 void compute_jacobians(Particle particle, 
                         vector<int> idf, 
-                        MatrixXf R,
-                        vector<VectorXf> &zp,
-						vector<MatrixXf> *Hv, 
-                        vector<MatrixXf> *Hf, 
-                        vector<MatrixXf> *Sf);
+                        Matrix2f R,
+                        vector<Vector2f> &zp,
+                        vector<Matrix23f> *Hv, 
+                        vector<Matrix2f> *Hf, 
+                        vector<Matrix2f> *Sf);
 
 #endif //COMPUTE_JACOBIANS_H

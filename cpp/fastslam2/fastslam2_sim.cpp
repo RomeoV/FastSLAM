@@ -49,7 +49,7 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	particles[p].setW(uniformw);
     }
 
-    VectorXf xtrue(3);
+    Vector3f xtrue(3);
     xtrue.setZero();
 
     float dt = DT_CONTROLS; //change in time btw predicts
@@ -82,7 +82,7 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
     }
 
     vector<int> ftag_visible;
-    vector<VectorXf> z;
+    vector<Vector2f> z;
 
     //Main loop
     while (iwp !=-1) {
@@ -122,8 +122,8 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	    //Compute (known) data associations
 	    int Nf = particles[0].xf().size();
 	    vector<int> idf;
-	    vector<VectorXf> zf;
-	    vector<VectorXf> zn;
+	    vector<Vector2f> zf;
+	    vector<Vector2f> zn;
 
 	    bool testflag= false;
 	    data_associate_known(z,ftag_visible,da_table,Nf,zf,idf,zn);

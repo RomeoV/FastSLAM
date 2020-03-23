@@ -2,8 +2,8 @@
 #include <iostream>
 
 //z is range and bearing of visible landmarks
-void data_associate_known(vector<VectorXf> z, vector<int> idz, VectorXf &table, int Nf, \
-		vector<VectorXf> &zf, vector<int> &idf, vector<VectorXf> &zn) 
+void data_associate_known(vector<Vector2f> z, vector<int> idz, VectorXf &table, int Nf, \
+		vector<Vector2f> &zf, vector<int> &idf, vector<Vector2f> &zn) 
 {
 	idf.clear();
 	vector<int> idn;

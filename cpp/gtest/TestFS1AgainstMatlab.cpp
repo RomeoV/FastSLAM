@@ -97,7 +97,7 @@ TEST(FASTSLAM_TEST,compute_steering_test)
 
 TEST(FASTSLAM_TEST,predict_true_test)
 {
-    VectorXf xtrue(3);
+    Vector3f xtrue(3);
     xtrue.setZero();
 
     float V = 3;
@@ -190,8 +190,8 @@ TEST(FASTSLAM_TEST,get_observations_test)
     EXPECT_EQ(ftag_visible.size(), ftag.size());    
     float rmax = 30;
 
-    vector<VectorXf> z_out = get_observations(xtrue,lm,ftag_visible,rmax);
-    vector<VectorXf> z_gt;
+    vector<Vector2f> z_out = get_observations(xtrue,lm,ftag_visible,rmax);
+    vector<Vector2f> z_gt;
 
     VectorXf a(2);
     a<<25.7745,-1.4734;
@@ -210,10 +210,10 @@ TEST(FASTSLAM_TEST,get_observations_test)
 
 TEST(FASTSLAM_TEST,add_observation_noise_test)
 {
-    vector<VectorXf> z;
-    VectorXf a(2);
+    vector<Vector2f> z;
+    Vector2f a(2);
     a<<25.7745,-1.4734;
-    VectorXf b(2);
+    Vector2f b(2);
     b<<25.2762,0.1384;
     z.push_back(a);
     z.push_back(b);
@@ -226,10 +226,10 @@ TEST(FASTSLAM_TEST,add_observation_noise_test)
 
     add_observation_noise(z,R,SWITCH_SENSOR_NOISE);
 
-    vector<VectorXf> z_gt;
-    VectorXf a_gt(2);
+    vector<Vector2f> z_gt;
+    Vector2f a_gt(2);
     a_gt<<25.8522,-1.4621;
-    VectorXf b_gt(2);
+    Vector2f b_gt(2);
     b_gt<<25.3384,0.1309;
     z_gt.push_back(a_gt);
     z_gt.push_back(b_gt);
@@ -239,10 +239,10 @@ TEST(FASTSLAM_TEST,add_observation_noise_test)
 
 TEST(FASTSLAM_TEST,data_associate_known_test)
 {
-    vector<VectorXf> z;
-    VectorXf a(2);
+    vector<Vector2f> z;
+    Vector2f a(2);
     a<<25.7301,-1.4884;
-    VectorXf b(2);
+    Vector2f b(2);
     b<<25.1439,0.1137;
     z.push_back(a);
     z.push_back(b);
@@ -258,15 +258,15 @@ TEST(FASTSLAM_TEST,data_associate_known_test)
 
     int Nf = 0;
 
-    vector<VectorXf> zf;
+    vector<Vector2f> zf;
     vector<int> idf;
-    vector<VectorXf> zn;
+    vector<Vector2f> zn;
     data_associate_known(z,ftag_visible,da_table, Nf,zf,idf,zn);
 
-    vector<VectorXf> zn_gt;
-    VectorXf c(2);
+    vector<Vector2f> zn_gt;
+    Vector2f c(2);
     c<<25.7301,-1.4884;
-    VectorXf d(2);
+    Vector2f d(2);
     d<<25.1439,0.1137;
     zn_gt.push_back(c);
     zn_gt.push_back(d);
@@ -312,10 +312,10 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
     Pf.push_back(c);
     Pf.push_back(d);
 
-    vector<VectorXf> zf;
-    VectorXf e(2);
+    vector<Vector2f> zf;
+    Vector2f e(2);
     e<<25.5817,-1.4737;
-    VectorXf f(2);
+    Vector2f f(2);
     f<<24.6040,0.1458;
     zf.push_back(e);
     zf.push_back(f);
@@ -335,36 +335,36 @@ TEST(FASTSLAM_TEST,compute_jacobian_test)
     particle.setXf(xf);
     particle.setPf(Pf);
 
-    vector<VectorXf> zp;
-    vector<MatrixXf> Hv;
-    vector<MatrixXf> Hf;
-    vector<MatrixXf> Sf;
+    vector<Vector2f> zp;
+    vector<Matrix23f> Hv;
+    vector<Matrix2f> Hf;
+    vector<Matrix2f> Sf;
     compute_jacobians(particle,idf,R,zp,&Hv,&Hf,&Sf);
 
     //compute jacobians
-    vector<VectorXf> zp_gt;
-    VectorXf g(2);
+    vector<Vector2f> zp_gt;
+    Vector2f g(2);
     g<<25.7310,-1.4593;
-    VectorXf h(2);
+    Vector2f h(2);
     f<<24.6177,0.1939;
     zp_gt.push_back(g);
     zp_gt.push_back(f);
 
-    vector<MatrixXf> Hv_gt;
-    MatrixXf i(2,3);
+    vector<Matrix23f> Hv_gt;
+    Matrix23f i(2,3);
     i<<-0.0837,0.9965,0,
 	-0.0387,-0.0033,-1.0;
-    MatrixXf j(2,3);
+    Matrix23f j(2,3);
     j<< -0.9862,-0.1653,0,
 	0.0067,-0.0401,-1.0;
     Hv_gt.push_back(i);
     Hv_gt.push_back(j);
 
-    vector<MatrixXf> Hf_gt;
-    MatrixXf m(2,2);
+    vector<Matrix2f> Hf_gt;
+    Matrix2f m(2,2);
     m<<0.0837,-0.9965,
 	0.0387, 0.0033;
-    MatrixXf n(2,2);
+    Matrix2f n(2,2);
     n<<0.9862, 0.1653,
 	-0.0067, 0.0401;
     Hf_gt.push_back(m);
@@ -425,10 +425,10 @@ TEST(FASTSLAM_TEST,compute_weight_test)
     particle.setPf(Pf);
 
     //zf
-    vector<VectorXf> zf;
-    VectorXf e(2);
+    vector<Vector2f> zf;
+    Vector2f e(2);
     e<<25.6975,-1.4795;
-    VectorXf f(2);
+    Vector2f f(2);
     f<<24.5414,0.1713;
     zf.push_back(e);
     zf.push_back(f);
@@ -485,10 +485,10 @@ TEST(FASTSLAM_TEST,feature_update_test)
     particle.setPf(Pf);
 
     //zf
-    vector<VectorXf> zf;
-    VectorXf e(2);
+    vector<Vector2f> zf;
+    Vector2f e(2);
     e<<25.4653,-1.4981;
-    VectorXf f(2);
+    Vector2f f(2);
     f<<24.6960,0.1803;
     zf.push_back(e);
     zf.push_back(f);   
@@ -561,10 +561,10 @@ TEST(FASTSLAM_TEST,add_feature_test)
     particle.setPf(Pf);
 
     //zf
-    vector<VectorXf> zn;
-    VectorXf a(2);
+    vector<Vector2f> zn;
+    Vector2f a(2);
     a<<25.8047,-1.4638;
-    VectorXf b(2);
+    Vector2f b(2);
     b<<25.2023,0.1198;
     zn.push_back(a);
     zn.push_back(b);  
@@ -609,7 +609,7 @@ TEST(FASTSLAM_TEST,add_feature_test)
     //EXPECT_TRUE(EqualVectors(Pf_out, particle.Pf()));
 }
 
-TEST(FASTSLAM_TEST, DISABLED_stratified_random_test) 
+TEST(FASTSLAM_TEST, stratified_random_test) 
 {
     int N = 10;
     vector<float> s;
@@ -643,7 +643,7 @@ TEST(FASTSLAM_TEST, DISABLED_stratified_random_test)
     //EXPECT_TRUE(EqualVectors(s,s_gt));
 }
 
-TEST(FASTSLAM_TEST, DISABLED_stratified_resample_test) 
+TEST(FASTSLAM_TEST, stratified_resample_test) 
 {
     vector<int> keep;
     float Neff;
@@ -698,7 +698,7 @@ TEST(FASTSLAM_TEST, fastslam1_sim_test)
 }
 */
 
-TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
+TEST(FASTSLAM_TEST, sample_proposal_test)
 {
     //w
     float w = 0.01;
@@ -709,15 +709,15 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
 
     //Pv
     Matrix3f Pv(3,3);
-    Pv<< 0.0004927, -0.0000653, -0.0000126,
-   -0.0000653, 0.0001592, 0.0000369,
-   -0.0000126, 0.0000369, 0.0000086;
+    Pv << 0.0004927, -0.0000653, -0.0000126,
+	 -0.0000653,  0.0001592,  0.0000369,
+	 -0.0000126,  0.0000369,  0.0000086;
 
     //xf
     vector<Vector2f> xf;
-    VectorXf a(2);
+    Vector2f a(2);
     a<<2.4261,-25.8041;
-    VectorXf b(2);
+    Vector2f b(2);
     b<<25.7095,3.2392;
     xf.push_back(a);
     xf.push_back(b);
@@ -742,10 +742,10 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     particle.setPf(Pf);
 
 
-    vector<VectorXf> zf;
-    VectorXf i(2);
+    vector<Vector2f> zf;
+    Vector2f i(2);
     i<<25.74325,-1.4901;
-    VectorXf j(2);
+    Vector2f j(2);
     j<<24.4729, 0.1353;
     zf.push_back(i);
     zf.push_back(j);
@@ -765,7 +765,7 @@ TEST(FASTSLAM_TEST, DISABLED_sample_proposal_test)
     // sample_proposal
     float w_gt = 1.6005;
     
-    VectorXf xv_gt(3);
+    Vector3f xv_gt(3);
     xv_gt<< 1.2935, -0.1718, -0.0387;
 
     Matrix3f Pv_gt(3,3);
@@ -837,10 +837,10 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     particle.setXf(xf);
     particle.setPf(Pf);
 
-    vector<VectorXf> zf;
-    VectorXf i(2);
+    vector<Vector2f> zf;
+    Vector2f i(2);
     i<<25.7432,-1.4901;
-    VectorXf j(2);
+    Vector2f j(2);
     j<<24.4729, 0.1353;
     zf.push_back(i);
     zf.push_back(j);
@@ -859,7 +859,7 @@ TEST(FASTSLAM_TEST, likelihood_given_xv_test)
     EXPECT_NE(like, 122.7224);
 }
 
-TEST(FASTSLAM_TEST, DISABLED_gauss_evaluate_test)
+TEST(FASTSLAM_TEST, gauss_evaluate_test)
 {
    
     VectorXf v(3);
@@ -898,7 +898,7 @@ TEST(FASTSLAM_TEST, DISABLED_gauss_evaluate_test)
     EXPECT_EQ(prior, prior_gt);
 }
 
-TEST(FASTSLAM_TEST, DISABLED_multivariate_gauss_test)
+TEST(FASTSLAM_TEST, multivariate_gauss_test)
 {
     VectorXf x(2);
     x<< 3.0000, -0.0087;
@@ -921,7 +921,7 @@ TEST(FASTSLAM_TEST, delta_xv_test)
 }
 
 
-TEST(FASTSLAM_TEST, DISABLED_resample_particles_test)
+TEST(FASTSLAM_TEST, resample_particles_test)
 {
     vector<Particle> particles(10);
     for (int i = 0; i< particles.size(); i++) {
@@ -960,7 +960,7 @@ TEST(FASTSLAM_TEST, DISABLED_resample_particles_test)
     }
 }
 
-TEST(FASTSLAM_TEST, DISABLED_misc_test)
+TEST(FASTSLAM_TEST, misc_test)
 {
     float like = 4.2596*pow(10.f,3.f);
     float prior = 5.4764*pow(10.f,5.f);

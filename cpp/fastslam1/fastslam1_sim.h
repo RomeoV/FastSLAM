@@ -17,6 +17,6 @@ using namespace std;
 using namespace Eigen;
 
 vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp);
-MatrixXf make_laser_lines(vector<VectorXf> rb, VectorXf xv);
+MatrixXf make_laser_lines(vector<Vector2f> rb, Vector3f xv);
 
 #endif //FASTSLAM2_SIM_H

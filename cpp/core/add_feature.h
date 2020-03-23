@@ -7,7 +7,7 @@
 
 using namespace Eigen;
 
-void add_feature(Particle &particle, vector<VectorXf> z, MatrixXf R);
+void add_feature(Particle &particle, vector<Vector2f> z, Matrix2f R);
  
 #endif //ADD_FEATURE_H
 
