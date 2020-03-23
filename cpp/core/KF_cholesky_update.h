@@ -5,6 +5,15 @@
 
 using namespace Eigen;
 
+
+/*!
+    Update Kalman Filter using Cholesky decomposition. [Some LinAlg, Nik could do that ;)]
+	@param[out] x 	    State vector.
+    @param[out] P 	    Covariance matrix of state.
+	@param[in]  v   	velocity at current state.
+    @param[in]  R    	Covariance matrix of measurements.
+    @param[in]  H    	Jacobian of h wrt feature states.
+ */
 void KF_cholesky_update(Vector2f &x,Matrix2f &P,Vector2f v,Matrix2f R,Matrix2f H);
 
 #endif

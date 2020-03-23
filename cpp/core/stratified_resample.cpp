@@ -47,9 +47,7 @@ void stratified_resample(VectorXf w, vector<int> &keep, float &Neff)
     }
 }
 
-//
-//returns a cumulative sum array
-//
+
 void cumsum(VectorXf &w) 
 {
     VectorXf csumVec = VectorXf(w);

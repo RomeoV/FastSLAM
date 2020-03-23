@@ -5,9 +5,6 @@
 
 using namespace std;
 
-//
-// add new features
-//
 void add_feature(Particle &particle, vector<Vector2f> z, Matrix2f R)
 {
     int lenz = z.size();

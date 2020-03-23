@@ -8,6 +8,7 @@ vector<Vector2f> get_observations(Vector3f x, MatrixXf lm, vector<int> &idf, flo
 	return compute_range_bearing(x,lm);	
 }
 
+
 void get_visible_landmarks(Vector3f x, MatrixXf &lm, vector<int> &idf, float rmax)
 {
 	//select set of landmarks that are visible within vehicle's 

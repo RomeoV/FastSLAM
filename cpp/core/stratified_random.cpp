@@ -32,9 +32,6 @@ void stratified_random(int N, vector<float> &di)
     }
 }
 
-//
-// Generate a random number between 0 and 1
-// return a uniform number in [0,1].
 double unifRand()
 {
     return rand() / double(RAND_MAX);

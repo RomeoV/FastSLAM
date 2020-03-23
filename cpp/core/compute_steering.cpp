@@ -7,16 +7,7 @@
 
 using namespace std;
 
-/**
-* @param x - true position
-* @param wp - waypoints
-* @param iwp - index to current waypoint
-* @param minD - minimum distance to current waypoint before switching to next
-* @param G - current steering angle
-* @param rateG - max steering rate (rad/s)
-* @param maxG - max steering angle (rad)
-* @param dt - timestep
-**/
+
 void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD, 
 				float& G, float rateG, float maxG, float dt)
 {

@@ -1,6 +1,11 @@
 #include "pi_to_pi.h"
 #include <iostream>
 
+
+/*!
+    Clips all angles in angle (radiants) to range [-pi,pi].
+	@param[out] angle   Vector of angles (radiants).
+ */
 void pi_to_pi(VectorXf &angle) 
 {
     int n;
@@ -19,6 +24,10 @@ void pi_to_pi(VectorXf &angle)
     }
 }
 
+/*!
+    Clips ang  to range [-pi,pi].
+	@param[out] angle   angle in radiants.
+ */
 float pi_to_pi(float ang) 
 {
     int n;
