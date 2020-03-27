@@ -18,7 +18,7 @@ using namespace Eigen;
     @param[in]  dt        seconds, time interval between control signals, float. In configfile.cpp
     @param[in]  addrandom        0/1, if sampling from predict noise, for fs1 usually true/1
  */
-void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, int addrandom);
+void predict(Particle &particle,double V,double G,Matrix2d Q, double WB,double dt, int addrandom);
 
 /*!
     Brings the angle to a range between -pi and +pi. If the angle is greater than 180 degrees,
@@ -26,6 +26,6 @@ void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, i
     @param[out] return the modified angle in radians
     @param[in]  ang     angle in radians
  */
-float pi_to_pi2(float ang); 
+double pi_to_pi2(double ang); 
 
 #endif //PREDICT_H

@@ -3,10 +3,10 @@
 
 using namespace std;
 
-MatrixXf line_plot_conversion(MatrixXf lnes)
+MatrixXd line_plot_conversion(MatrixXd lnes)
 {
 	int len = lnes.cols()*3 -1;			
-	MatrixXf p(2,len);
+	MatrixXd p(2,len);
 
 	for (int j=0; j<len; j+=3) {
 		int k = floor((j+1)/3); //reverse of len calculation

@@ -5,6 +5,6 @@
 
 using namespace Eigen;
 
-MatrixXf line_plot_conversion(MatrixXf lnes);
+MatrixXd line_plot_conversion(MatrixXd lnes);
 
 #endif //LINE_PLOT_CONVERSION_H

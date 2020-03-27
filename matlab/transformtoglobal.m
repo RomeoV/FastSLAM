@@ -1,4 +1,4 @@
-function p = TransformToGlobal(p, b)
+function p = transformtoglobal(p, b)
 % function p = TransformToGlobal(p, b)
 %
 % Transform a list of poses [x;y;phi] so that they are global wrt a base pose

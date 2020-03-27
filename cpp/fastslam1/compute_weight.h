@@ -16,6 +16,6 @@ using namespace std;
     @param[in]  idf      vector of map features, calculated by data_associate_known, used for jacobians 
     @param[in]  R        matrix of observation noises, metres and radians
  */
-float compute_weight(Particle &particle, vector<Vector2f> z, vector<int> idf, Matrix2f R); 
+double compute_weight(Particle &particle, vector<Vector2d> z, vector<int> idf, Matrix2d R); 
 
 #endif

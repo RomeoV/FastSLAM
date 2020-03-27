@@ -4,6 +4,6 @@
 #include<Eigen/Dense>
 #include "core/particle.h"
 
-void observe_heading(Particle &particle, float phi, int useheading);
+void observe_heading(Particle &particle, double phi, int useheading);
 
 #endif

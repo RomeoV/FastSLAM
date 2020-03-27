@@ -4,12 +4,12 @@
 
 using namespace std;
 
-void stratified_random(int N, vector<float> &di)
+void stratified_random(int N, vector<double> &di)
 { 
-    float k = 1.0/(float)N;
+    double k = 1.0/(double)N;
    
     //deterministic intervals
-    float temp = k/2;
+    double temp = k/2;
     di.push_back(temp);
     while (temp < 1-k/2) {
         temp = temp+k;
@@ -26,7 +26,7 @@ void stratified_random(int N, vector<float> &di)
     //assert(di.size() == N); 
     */
     //dither within interval
-    vector<float>::iterator diter; 
+    vector<double>::iterator diter; 
     for (diter = di.begin(); diter != di.end(); diter++) {
         *diter = (*diter) + unifRand() * k - (k/2);
     }

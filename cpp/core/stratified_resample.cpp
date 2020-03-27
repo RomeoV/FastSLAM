@@ -4,17 +4,17 @@
 
 using namespace std;
 
-void stratified_resample(VectorXf w, vector<int> &keep, float &Neff)
+void stratified_resample(VectorXd w, vector<int> &keep, double &Neff)
 {
-    VectorXf wsqrd(w.size());
-    float wsum = w.sum();    
+    VectorXd wsqrd(w.size());
+    double wsum = w.sum();    
 
     for (int i=0; i<w.size(); i++) {
         w(i) = w(i)/ wsum;
-        wsqrd(i) = (float)pow(w(i),2);
+        wsqrd(i) = (double)pow(w(i),2);
     }
     
-    Neff = 1.0f/(float)wsqrd.sum();
+    Neff = 1.0f/(double)wsqrd.sum();
 
     int len = w.size();
     keep.resize(len);
@@ -22,7 +22,7 @@ void stratified_resample(VectorXf w, vector<int> &keep, float &Neff)
         keep[i] = -1;
     }
 
-    vector<float> select;
+    vector<double> select;
     stratified_random(len,select); 
     /*
     select.push_back(0.0948);
@@ -48,12 +48,12 @@ void stratified_resample(VectorXf w, vector<int> &keep, float &Neff)
 }
 
 
-void cumsum(VectorXf &w) 
+void cumsum(VectorXd &w) 
 {
-    VectorXf csumVec = VectorXf(w);
+    VectorXd csumVec = VectorXd(w);
 
     for (int i=0; i< w.size(); i++) {
-        float sum =0;
+        double sum =0;
         for (int j=0; j<=i; j++) {
 	    sum+=csumVec(j);
 	}			

@@ -19,7 +19,7 @@ using namespace std;
 
     @return Vector of distance and bearing to each landmark.
  */
-vector<Vector2f> get_observations(Vector3f x,MatrixXf lm,vector<int> &idf,float rmax);
+vector<Vector2d> get_observations(Vector3d x,MatrixXd lm,vector<int> &idf,double rmax);
 
 
 /*!
@@ -30,7 +30,7 @@ vector<Vector2f> get_observations(Vector3f x,MatrixXf lm,vector<int> &idf,float 
 	@param[out] idf 	Index of known landmarks. (updated)
 	@param[in] 	rmax 	Maximal distance between x and lm(:,i) to be considered visible.
  */
-void get_visible_landmarks(Vector3f x, MatrixXf &lm,vector<int> &idf, float rmax);
+void get_visible_landmarks(Vector3d x, MatrixXd &lm,vector<int> &idf, double rmax);
 
 /*!
     Computes distance and bearing between x and all landmarks in lm.
@@ -39,7 +39,7 @@ void get_visible_landmarks(Vector3f x, MatrixXf &lm,vector<int> &idf, float rmax
 
     @return Vector  of 2d vectors (distance, angle) between x and each landmark in lm. 
  */
-vector<Vector2f> compute_range_bearing(Vector3f x, MatrixXf lm);
+vector<Vector2d> compute_range_bearing(Vector3d x, MatrixXd lm);
 
 /*!
     Finds all visible landmarks given current state.
@@ -50,6 +50,6 @@ vector<Vector2f> compute_range_bearing(Vector3f x, MatrixXf lm);
 
     @return Vector landmark indices which are visible.
  */
-vector<int> find2(vector<float> dx, vector<float> dy, float phi, float rmax);
+vector<int> find2(vector<double> dx, vector<double> dy, double phi, double rmax);
 
 #endif

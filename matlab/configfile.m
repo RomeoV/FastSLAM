@@ -35,10 +35,10 @@ NEFFECTIVE= 0.75*NPARTICLES; % minimum number of effective particles before resa
 SWITCH_CONTROL_NOISE= 1;
 SWITCH_SENSOR_NOISE = 1;
 SWITCH_INFLATE_NOISE= 0;
-SWITCH_PREDICT_NOISE = 0;   % sample noise from predict (usually 1 for fastslam1.0 and 0 for fastslam2.0)
+SWITCH_PREDICT_NOISE = 1;   % sample noise from predict (usually 1 for fastslam1.0 and 0 for fastslam2.0)
 SWITCH_SAMPLE_PROPOSAL = 1; % sample from proposal (no effect on fastslam1.0 and usually 1 for fastslam2.0)
 SWITCH_HEADING_KNOWN= 0;
 SWITCH_RESAMPLE= 1; 
-SWITCH_PROFILE= 1;
+SWITCH_PROFILE= 0;
 SWITCH_SEED_RANDOM= 0; % if not 0, seed the randn() with its value at beginning of simulation (for repeatability)
 

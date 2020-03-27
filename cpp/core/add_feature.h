@@ -14,7 +14,7 @@ using namespace Eigen;
     @param[in]  z        Landmark measurements / observations [meter, radians].
     @param[in]  R        Covariance matrix of observation noises -> configfile.h
  */
-void add_feature(Particle &particle, vector<Vector2f> z, Matrix2f R);
+void add_feature(Particle &particle, vector<Vector2d> z, Matrix2d R);
  
 #endif //ADD_FEATURE_H
 

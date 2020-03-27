@@ -12,7 +12,7 @@ using namespace Eigen;
     @param[in]  P        Covariance Matrix.
     @param[in]  n        Number of samples.
  */
-VectorXf multivariate_gauss(VectorXf x, MatrixXf P, int n);
+VectorXd multivariate_gauss(VectorXd x, MatrixXd P, int n);
 
 #endif //MULTIVARIATE_GAUSS_H
 

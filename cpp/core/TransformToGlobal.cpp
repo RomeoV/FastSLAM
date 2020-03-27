@@ -1,14 +1,14 @@
 #include "TransformToGlobal.h"
 #include "pi_to_pi.h"
 
-void TransformToGlobal(MatrixXf &p, Vector3f b) 
+void TransformToGlobal(MatrixXd &p, Vector3d b) 
 {
 	//rotate
-	Matrix2f rot(2,2);
+	Matrix2d rot(2,2);
 	rot<<cos(b(2)), -sin(b(2)), sin(b(2)), cos(b(2));
 	
-	MatrixXf p_resized;
-	p_resized = MatrixXf(p);
+	MatrixXd p_resized;
+	p_resized = MatrixXd(p);
 	p_resized.conservativeResize(2,p_resized.cols());
 	p_resized = rot*p_resized;		
 	
@@ -19,7 +19,7 @@ void TransformToGlobal(MatrixXf &p, Vector3f b)
 		p(1,c) = p_resized(1,c)+b(1); 				
 	}
 
-	float input;
+	double input;
 	//if p is a pose and not a point
 	if (p.rows() ==3){
 		for (int k=0; k<p_resized.cols();k++) {

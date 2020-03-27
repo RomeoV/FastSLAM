@@ -19,7 +19,7 @@ using namespace Eigen;
 	@param[out] 	idf 	Index of known landmarks.
 	@param[out] 	zn	 	New landmarks.
  */
-void data_associate_known(vector<Vector2f> z, vector<int> idz, VectorXf &table, int Nf, \
-						  vector<Vector2f> &zf, vector<int> &idf, vector<Vector2f> &zn); 
+void data_associate_known(vector<Vector2d> z, vector<int> idz, VectorXd &table, int Nf, \
+						  vector<Vector2d> &zf, vector<int> &idf, vector<Vector2d> &zn); 
 
 #endif //DATA_ASSOCIATE_KNOWN_H

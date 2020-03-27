@@ -10,14 +10,14 @@ using namespace std;
 void resample_particles(vector<Particle> &particles, int Nmin, int doresample) 
 {
     int N = particles.size();
-    VectorXf w(N);
+    VectorXd w(N);
     w.setZero();
 
     for (int i=0; i<N; i++) {
         w(i) = particles[i].w();
     }
 
-    float ws = w.sum();
+    double ws = w.sum();
     assert(ws != 0);
 
     for (int i=0; i<N; i++) {
@@ -28,7 +28,7 @@ void resample_particles(vector<Particle> &particles, int Nmin, int doresample)
         particles[i].setW(particles[i].w()/ws);
     }
 
-    float Neff=0;
+    double Neff=0;
     vector<int> keep;
     stratified_resample(w,keep,Neff);
 
@@ -42,7 +42,7 @@ void resample_particles(vector<Particle> &particles, int Nmin, int doresample)
             particles[i] = old_particles[keep[i]]; 	
         }	
         for (int i=0; i<N; i++) {
-            float new_w = 1.0f/(float)N;
+            double new_w = 1.0f/(double)N;
             assert(isfinite(new_w));
             assert(N == 100);
             particles[i].setW(new_w);

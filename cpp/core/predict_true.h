@@ -13,6 +13,6 @@ using namespace Eigen;
     @param[in]  WB  Wheelbase.
     @param[in]  dt  timestep.
  */
-void predict_true(Vector3f &xv,float V,float G,float WB,float dt); 
+void predict_true(Vector3d &xv,double V,double G,double WB,double dt); 
 	
 #endif //PREDICT_TRUE_H

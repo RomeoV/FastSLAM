@@ -22,7 +22,7 @@ using namespace Eigen;
     @param[in]  lm        list of landmark data
     @param[in]  wp        list of waypoints, only used to compute steering.
  */
-vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp);
+vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp);
 
 /*!
     Makes laser lines (calculate but not used in fastslam1_sim).
@@ -31,6 +31,6 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp);
     @param[in]  rb        measurements
     @param[in]  xv        robot pose
  */
-MatrixXf make_laser_lines(vector<Vector2f> rb, Vector3f xv);
+MatrixXd make_laser_lines(vector<Vector2d> rb, Vector3d xv);
 
 #endif //FASTSLAM2_SIM_H
