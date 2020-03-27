@@ -6,24 +6,24 @@
 #include "assert.h"
 
 //compute proposal distribution, then sample from it, and compute new particle weight
-void sample_proposal(Particle &particle, vector<Vector2f> z, vector<int> idf, Matrix2f R)
+void sample_proposal(Particle &particle, vector<Vector2d> z, vector<int> idf, Matrix2d R)
 {
     assert(isfinite(particle.w()));
-    Vector3f xv = Vector3f(particle.xv()); //robot position
-    Matrix3f Pv = Matrix3f(particle.Pv()); //controls (motion command)
+    Vector3d xv = Vector3d(particle.xv()); //robot position
+    Matrix3d Pv = Matrix3d(particle.Pv()); //controls (motion command)
 
-    Vector3f xv0 = Vector3f(xv);
-    Matrix3f Pv0 = Matrix3f(Pv);	
+    Vector3d xv0 = Vector3d(xv);
+    Matrix3d Pv0 = Matrix3d(Pv);	
 
-    vector<Matrix23f> Hv;
-    vector<Matrix2f> Hf;
-    vector<Matrix2f> Sf;
-    vector<Vector2f> zp;
+    vector<Matrix23d> Hv;
+    vector<Matrix2d> Hf;
+    vector<Matrix2d> Sf;
+    vector<Vector2d> zp;
 
-    Vector2f zpi;
-    Matrix23f Hvi;
-    Matrix2f Hfi;
-    Matrix2f Sfi;
+    Vector2d zpi;
+    Matrix23d Hvi;
+    Matrix2d Hfi;
+    Matrix2d Sfi;
 
     //process each feature, incrementally refine proposal distribution
     unsigned i,r;
@@ -44,7 +44,7 @@ void sample_proposal(Particle &particle, vector<Vector2f> z, vector<int> idf, Ma
         Hfi = Hf[0];
         Sfi = Sf[0];
 
-        Vector2f vi = z[i] - zpi;
+        Vector2d vi = z[i] - zpi;
         vi[1] = pi_to_pi(vi[1]);
 
         //proposal covariance
@@ -58,22 +58,22 @@ void sample_proposal(Particle &particle, vector<Vector2f> z, vector<int> idf, Ma
     }
 
     //sample from proposal distribution
-    Vector3f xvs = multivariate_gauss(xv,Pv,1); 
+    Vector3d xvs = multivariate_gauss(xv,Pv,1); 
     particle.setXv(xvs);
-    Matrix3f zeros(3,3);
+    Matrix3d zeros(3,3);
     zeros.setZero();
     particle.setPv(zeros);
 
     //compute sample weight: w = w* p(z|xk) p(xk|xk-1) / proposal
-    float like = likelihood_given_xv(particle, z, idf, R);
-    float prior = gauss_evaluate(delta_xv(xv0,xvs), Pv0,0);
-    float prop = gauss_evaluate(delta_xv(xv,xvs),Pv,0);
+    double like = likelihood_given_xv(particle, z, idf, R);
+    double prior = gauss_evaluate(delta_xv(xv0,xvs), Pv0,0);
+    double prop = gauss_evaluate(delta_xv(xv,xvs),Pv,0);
     assert(isfinite(particle.w()));
 
-    float a = prior/prop;
-    float b = particle.w() * a;
-    float newW = like * b;
-    //float newW = particle.w() * like * prior / prop;
+    double a = prior/prop;
+    double b = particle.w() * a;
+    double newW = like * b;
+    //double newW = particle.w() * like * prior / prop;
     #if 0
     if (!isfinite(newW)) {
 	cout<<"LIKELIHOOD GIVEN XV INPUTS"<<endl;   
@@ -135,14 +135,14 @@ void sample_proposal(Particle &particle, vector<Vector2f> z, vector<int> idf, Ma
     particle.setW(newW);
 } 
 
-float likelihood_given_xv(Particle particle, vector<Vector2f> z, vector<int>idf, Matrix2f R) 
+double likelihood_given_xv(Particle particle, vector<Vector2d> z, vector<int>idf, Matrix2d R) 
 {
-    float w = 1;
+    double w = 1;
 
-    vector<Matrix23f> Hv;
-    vector<Matrix2f> Hf;
-    vector<Matrix2f> Sf;
-    vector<Vector2f> zp;
+    vector<Matrix23d> Hv;
+    vector<Matrix2d> Hf;
+    vector<Matrix2d> Sf;
+    vector<Vector2d> zp;
 
     unsigned j,k;
     vector<int> idfi;
@@ -155,7 +155,7 @@ float likelihood_given_xv(Particle particle, vector<Vector2f> z, vector<int>idf,
 	Sf.clear();
 	zp.clear();
 
-	Vector2f v(z.size()); 
+	Vector2d v(z.size()); 
         compute_jacobians(particle,idfi,R,zp,&Hv,&Hf,&Sf);
 	v = z[j] - zp[0];
         v(1) = pi_to_pi(v(1));
@@ -164,10 +164,10 @@ float likelihood_given_xv(Particle particle, vector<Vector2f> z, vector<int>idf,
     return w;
 }
 
-Vector3f delta_xv(Vector3f xv1, Vector3f xv2)
+Vector3d delta_xv(Vector3d xv1, Vector3d xv2)
 {
     //compute innovation between two xv estimates, normalising the heading component
-    Vector3f dx = xv1-xv2; 
+    Vector3d dx = xv1-xv2; 
     dx(2) = pi_to_pi(dx(2));
     return dx;
 }

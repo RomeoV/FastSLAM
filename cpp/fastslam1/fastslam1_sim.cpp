@@ -19,7 +19,7 @@ using namespace config;
 using namespace std;
 
 int counter=0;
-vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp) 
+vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp) 
 {
     if (SWITCH_PREDICT_NOISE) {
 	printf("Sampling from predict noise usually OFF for FastSLAM 2.0\n");	
@@ -32,7 +32,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
     R << sigmaR*sigmaR, 0, 
       0, sigmaB*sigmaB;
 
-    float veh[2][3] = {{0,-WHEELBASE,-WHEELBASE},{0,-1,1}};
+    double veh[2][3] = {{0,-WHEELBASE,-WHEELBASE},{0,-1,1}};
 
     //vector of particles (their count will change)
     vector<Particle> particles(NPARTICLES);
@@ -41,16 +41,16 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
     }
 
     //initialize particle weights as uniform
-    float uniformw = 1.0/(float)NPARTICLES;    
+    double uniformw = 1.0/(double)NPARTICLES;    
     for (unsigned int p = 0; p < NPARTICLES; p++) {
 	particles[p].setW(uniformw);
     }
 
-    Vector3f xtrue(3);
+    Vector3d xtrue(3);
     xtrue.setZero();
 
-    float dt = DT_CONTROLS; //change in time btw predicts
-    float dtsum = 0; //change in time since last observation
+    double dt = DT_CONTROLS; //change in time btw predicts
+    double dtsum = 0; //change in time since last observation
 
     vector<int> ftag; //identifier for each landmark
     for (int i=0; i< lm.cols(); i++) {
@@ -58,21 +58,21 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
     }
 
     //data ssociation table
-    VectorXf da_table(lm.cols());
+    VectorXd da_table(lm.cols());
     for (int s=0; s<da_table.size(); s++) {
 	da_table[s] = -1;
     }
 
     int iwp = 0; //index to first waypoint
-    float G = 0; //initial steer angle
-    MatrixXf plines; //will later change to list of points
+    double G = 0; //initial steer angle
+    MatrixXd plines; //will later change to list of points
 
     if (SWITCH_SEED_RANDOM !=0) {
 	srand(SWITCH_SEED_RANDOM);
     } 		
 
-    Matrix2f Qe = Matrix2f(Q);
-    Matrix2f Re = Matrix2f(R);
+    Matrix2d Qe = Matrix2d(Q);
+    Matrix2d Re = Matrix2d(R);
 
     if (SWITCH_INFLATE_NOISE ==1) {
 	Qe = 2*Q;
@@ -80,7 +80,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
     }
 
     vector<int> ftag_visible;
-    vector<Vector2f> z; //range and bearings of visible landmarks
+    vector<Vector2d> z; //range and bearings of visible landmarks
 
     //Main loop
     while (iwp !=-1) {
@@ -92,17 +92,17 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	predict_true(xtrue,V,G,WHEELBASE,dt);
 
 	//add process noise
-	float* VnGn = new float[2];        
+	double* VnGn = new double[2];        
 	add_control_noise(V,G,Q,SWITCH_CONTROL_NOISE,VnGn);
-	float Vn = VnGn[0];
-	float Gn = VnGn[1];
+	double Vn = VnGn[0];
+	double Gn = VnGn[1];
 
 	//Predict step	
 	for (unsigned int i=0; i< NPARTICLES; i++) {
 	    predict(particles[i],Vn,Gn,Qe,WHEELBASE,dt,SWITCH_PREDICT_NOISE);
 	    /* if (SWITCH_HEADING_KNOWN) { */
 		/* for (int j=0; j< particles[i].xf().size(); j++) { */
-		    /* Vector2f xf_j = particles[i].xf()[j]; */
+		    /* Vector2d xf_j = particles[i].xf()[j]; */
 		    /* xf_j[2] = xtrue[2]; */
 		    /* particles[i].setXfi(j,xf_j); */	
 		/* } */           
@@ -128,8 +128,8 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	    //Compute (known) data associations
 	    int Nf = particles[0].xf().size();
 	    vector<int> idf;
-	    vector<Vector2f> zf;
-	    vector<Vector2f> zn;            
+	    vector<Vector2d> zf;
+	    vector<Vector2d> zn;            
 
 	    bool testflag= false;
 	    data_associate_known(z,ftag_visible,da_table,Nf,zf,idf,zn);
@@ -137,7 +137,7 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 	    //perform update
 	    for (int i =0; i<NPARTICLES; i++) {
 		if (!zf.empty()) { //observe map features
-		    float w = compute_weight(particles[i],zf,idf,R);
+		    double w = compute_weight(particles[i],zf,idf,R);
 		    w = particles[i].w()*w;
 		    particles[i].setW(w);
 		    feature_update(particles[i],zf,idf,R);
@@ -160,16 +160,16 @@ vector<Particle> fastslam1_sim(MatrixXf lm, MatrixXf wp)
 
 //rb is measurements
 //xv is robot pose
-MatrixXf make_laser_lines(vector<Vector2f> rb, Vector3f xv) 
+MatrixXd make_laser_lines(vector<Vector2d> rb, Vector3d xv) 
 {
     if (rb.empty()) {
-	return MatrixXf(0,0);
+	return MatrixXd(0,0);
     }
 
     int len = rb.size();
-    MatrixXf lnes(4,len);
+    MatrixXd lnes(4,len);
 
-    MatrixXf globalMat(2,rb.size());
+    MatrixXd globalMat(2,rb.size());
     int j;
     for (j=0; j<globalMat.cols();j++) {
 	globalMat(0,j) = rb[j][0]*cos(rb[j][1]); 

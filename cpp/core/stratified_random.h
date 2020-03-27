@@ -12,7 +12,7 @@ using namespace std;
     @param[in]  N     Interval size (inverse).
 	@param[out] di    Generated array of random stratified numbers.
  */
-void stratified_random(int N, vector<float> &di);
+void stratified_random(int N, vector<double> &di);
 
 /*!
     Generates a random, uniformly sampled number between [0,1].

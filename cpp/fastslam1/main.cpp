@@ -10,8 +10,8 @@ int main (int argc, char *argv[])
 {
 	MyTimer Timer = MyTimer();
 	Timer.Start();
-	MatrixXf lm; //landmark positions
-	MatrixXf wp; //way points
+	MatrixXd lm; //landmark positions
+	MatrixXd wp; //way points
 
 	if (argc < 2)
 		return -1;

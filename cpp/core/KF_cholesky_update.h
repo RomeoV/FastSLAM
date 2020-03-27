@@ -14,6 +14,6 @@ using namespace Eigen;
     @param[in]  R    	Covariance matrix of measurements.
     @param[in]  H    	Jacobian of h wrt feature states.
  */
-void KF_cholesky_update(Vector2f &x,Matrix2f &P,Vector2f v,Matrix2f R,Matrix2f H);
+void KF_cholesky_update(Vector2d &x,Matrix2d &P,Vector2d v,Matrix2d R,Matrix2d H);
 
 #endif

@@ -16,7 +16,7 @@ using namespace Eigen;
 	@param[in] 	maxG 	max steering angle (rad).
 	@param[in] 	dt 		timestep.
  */
-void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD, 
-						float& G, float rateG, float maxG, float dt);
+void compute_steering(Vector3d x, MatrixXd wp, int& iwp, double minD, 
+						double& G, double rateG, double maxG, double dt);
 
 #endif //COMPUTE_STEERING_H

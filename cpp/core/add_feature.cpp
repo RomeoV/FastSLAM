@@ -5,15 +5,15 @@
 
 using namespace std;
 
-void add_feature(Particle &particle, vector<Vector2f> z, Matrix2f R)
+void add_feature(Particle &particle, vector<Vector2d> z, Matrix2d R)
 {
     int lenz = z.size();
-    vector<Vector2f> xf;
-    vector<Matrix2f> Pf;
-    Vector3f xv = particle.xv();
+    vector<Vector2d> xf;
+    vector<Matrix2d> Pf;
+    Vector3d xv = particle.xv();
 
-    float r,b,s,c;
-    Matrix2f Gz(2,2);
+    double r,b,s,c;
+    Matrix2d Gz(2,2);
 
     for (int i=0; i<lenz; i++) {
 	r = z[i][0];
@@ -21,7 +21,7 @@ void add_feature(Particle &particle, vector<Vector2f> z, Matrix2f R)
 	s = sin(xv(2)+b);
 	c = cos(xv(2)+b);
 
-	Vector2f measurement(2);
+	Vector2d measurement(2);
 	measurement(0) = xv(0) + r*c;
 	measurement(1) = xv(1) + r*s;
 	xf.push_back(measurement);

@@ -20,7 +20,7 @@
 using namespace config;
 using namespace std;
 
-vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp) 
+vector<Particle> fastslam2_sim(MatrixXd lm, MatrixXd wp) 
 {
     if (SWITCH_PREDICT_NOISE) {
 	printf("Sampling from predict noise usually OFF for FastSLAM 2.0\n");	
@@ -35,7 +35,7 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
     R << sigmaR*sigmaR, 0, 
       0, sigmaB*sigmaB;
 
-    float veh[2][3] = {{0,-WHEELBASE,-WHEELBASE},{0,-1,1}};
+    double veh[2][3] = {{0,-WHEELBASE,-WHEELBASE},{0,-1,1}};
 
     //vector of particles (their count will change)
     vector<Particle> particles(NPARTICLES);
@@ -44,16 +44,16 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
     }
 
     //initialize particle weights as uniform
-    float uniformw = 1.0/(float)NPARTICLES;    
+    double uniformw = 1.0/(double)NPARTICLES;    
     for (unsigned int p = 0; p < NPARTICLES; p++) {
 	particles[p].setW(uniformw);
     }
 
-    Vector3f xtrue(3);
+    Vector3d xtrue(3);
     xtrue.setZero();
 
-    float dt = DT_CONTROLS; //change in time btw predicts
-    float dtsum = 0; //change in time since last observation
+    double dt = DT_CONTROLS; //change in time btw predicts
+    double dtsum = 0; //change in time since last observation
 
     vector<int> ftag; //identifier for each landmark
     for (int i=0; i< lm.cols(); i++) {
@@ -61,20 +61,20 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
     }
 
     //data association table
-    VectorXf da_table(lm.cols());
+    VectorXd da_table(lm.cols());
     for (int s=0; s<da_table.size(); s++) {
 	da_table[s] = -1;
     }
 
     int iwp = 0; //index to first waypoint
-    float G = 0; //initial steer angle
+    double G = 0; //initial steer angle
 
     //if (SWITCH_SEED_RANDOM !=0) {
 	//srand(SWITCH_SEED_RANDOM);
     //} 		
 
-    MatrixXf Qe = MatrixXf(Q);
-    MatrixXf Re = MatrixXf(R);
+    MatrixXd Qe = MatrixXd(Q);
+    MatrixXd Re = MatrixXd(R);
 
     if (SWITCH_INFLATE_NOISE ==1) {
 	Qe = 2*Q;
@@ -82,7 +82,7 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
     }
 
     vector<int> ftag_visible;
-    vector<Vector2f> z;
+    vector<Vector2d> z;
 
     //Main loop
     while (iwp !=-1) {
@@ -94,10 +94,10 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	predict_true(xtrue,V,G,WHEELBASE,dt);
 
 	//add process noise
-	float* VnGn = new float[2];
+	double* VnGn = new double[2];
 	add_control_noise(V,G,Q,SWITCH_CONTROL_NOISE,VnGn);
-	float Vn = VnGn[0];
-	float Gn = VnGn[1];
+	double Vn = VnGn[0];
+	double Gn = VnGn[1];
 
 	//Predict step	
 	for (unsigned int i=0; i< NPARTICLES; i++) {
@@ -122,8 +122,8 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	    //Compute (known) data associations
 	    int Nf = particles[0].xf().size();
 	    vector<int> idf;
-	    vector<Vector2f> zf;
-	    vector<Vector2f> zn;
+	    vector<Vector2d> zf;
+	    vector<Vector2d> zn;
 
 	    bool testflag= false;
 	    data_associate_known(z,ftag_visible,da_table,Nf,zf,idf,zn);
@@ -152,12 +152,12 @@ vector<Particle> fastslam2_sim(MatrixXf lm, MatrixXf wp)
 	    if (!zn.empty()) {
 		for (unsigned i=0; i<NPARTICLES; i++) {
 		    if (zf.empty()) { //sample from proposal distribution if we have not already done so above
-			Vector3f xv = multivariate_gauss(particles[i].xv(),
+			Vector3d xv = multivariate_gauss(particles[i].xv(),
 				particles[i].Pv(),1);
 
 			assert(isfinite(particles[i].w()));
 			particles[i].setXv(xv);
-			Matrix3f pv(3,3); 
+			Matrix3d pv(3,3); 
 			pv.setZero();
 			particles[i].setPv(pv); 
 		    }

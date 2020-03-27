@@ -6,7 +6,7 @@
  * Should have highest priority to be translated to C. Just make
  * the matrices a 2D array with fixed size for now.
  * **************************************************************************/
-void read_input_file(const string s, MatrixXf *lm, MatrixXf *wp) 
+void read_input_file(const string s, MatrixXd *lm, MatrixXd *wp) 
 {
 	using std::ifstream;
 	using std::istringstream;

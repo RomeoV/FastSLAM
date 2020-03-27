@@ -9,14 +9,14 @@
 Particle::Particle() 
 {
 	_w = 1.0; 
-	_xv = Vector3f(3);
+	_xv = Vector3d(3);
         _xv.setZero();
-	_Pv = Matrix3f(3,3);
+	_Pv = Matrix3d(3,3);
         _Pv.setZero();
 	_da = NULL;
 }
 
-Particle::Particle(float w, Vector3f &xv, Matrix3f &Pv, vector<Vector2f> &xf, vector<Matrix2f> &Pf, float* da)
+Particle::Particle(double w, Vector3d &xv, Matrix3d &Pv, vector<Vector2d> &xf, vector<Matrix2d> &Pf, double* da)
 {
 	_w = w;
 	_xv = xv;
@@ -31,58 +31,58 @@ Particle::~Particle()
 }
 
 //getters
-float Particle::w() const
+double Particle::w() const
 {
 	return _w;	
 }
 
-Vector3f Particle::xv() const
+Vector3d Particle::xv() const
 {
 	return _xv;	
 }
 
-Matrix3f Particle::Pv() const
+Matrix3d Particle::Pv() const
 {
 	return _Pv;	
 }
 
-vector<Vector2f> Particle::xf() const
+vector<Vector2d> Particle::xf() const
 {
 	return _xf;	
 }
 
-vector<Matrix2f> Particle::Pf() const
+vector<Matrix2d> Particle::Pf() const
 {
 	return _Pf;	
 }
 
-float* Particle::da() const
+double* Particle::da() const
 {
 	return _da;	
 }
 
 //setters
-void Particle::setW(float w)
+void Particle::setW(double w)
 {
 	_w = w;
 }
 
-void Particle::setXv(Vector3f &xv)
+void Particle::setXv(Vector3d &xv)
 {
 	_xv = xv;
 }
 
-void Particle::setPv(Matrix3f &Pv)
+void Particle::setPv(Matrix3d &Pv)
 {
 	_Pv = Pv;
 }
 
-void Particle::setXf(vector<Vector2f> &xf)
+void Particle::setXf(vector<Vector2d> &xf)
 {
 	_xf = xf;
 }
 
-void Particle::setXfi(int i, Vector2f &vec) 
+void Particle::setXfi(int i, Vector2d &vec) 
 {
 	if (i >= _xf.size()){
 		_xf.resize(i+1);
@@ -90,12 +90,12 @@ void Particle::setXfi(int i, Vector2f &vec)
 	_xf[i] = vec;
 }
 
-void Particle::setPf(vector<Matrix2f> &Pf)
+void Particle::setPf(vector<Matrix2d> &Pf)
 {
 	_Pf = Pf;
 }
 
-void Particle::setPfi(int i, Matrix2f &m) 
+void Particle::setPfi(int i, Matrix2d &m) 
 {
 	if(i >= _Pf.size()) {
 		_Pf.resize(i+1);
@@ -103,7 +103,7 @@ void Particle::setPfi(int i, Matrix2f &m)
 	_Pf[i] = m;
 }
 
-void Particle::setDa(float* da)
+void Particle::setDa(double* da)
 {
 	_da = da;
 }
