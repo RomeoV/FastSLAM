@@ -9,23 +9,23 @@
 
 using namespace std;
 
-void observe_heading(Particle &particle, float phi, int useheading) 
+void observe_heading(Particle &particle, double phi, int useheading) 
 {
     if (useheading ==0){
     	return;
     }
-    float sigmaPhi = 0.01*pi/180.0; 
+    double sigmaPhi = 0.01*pi/180.0; 
     //cout<<"sigmaPhi "<<sigmaPhi<<endl;	
-    Vector3f xv = particle.xv();
+    Vector3d xv = particle.xv();
     //cout<<"xv"<<endl;
     //cout<<xv<<endl;		
-    Matrix3f Pv = particle.Pv();
+    Matrix3d Pv = particle.Pv();
     //cout<<"Pv"<<endl;
     //cout<<Pv<<endl;    
-    Matrix13f H(1,3);
+    Matrix13d H(1,3);
     H<<0,0,1;            
 
-    float v = pi_to_pi(phi-xv(2));
+    double v = pi_to_pi(phi-xv(2));
     //cout<<"v"<<endl;
     //cout<<v<<endl;
     KF_joseph_update(xv,Pv,v,pow(sigmaPhi,2),H);

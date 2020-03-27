@@ -8,10 +8,10 @@ using namespace Eigen;
 using namespace std;
 
 namespace Eigen {
-	using Matrix13f = Matrix<float, 1, 3>;
-	using Matrix31f = Matrix<float, 3, 1>;
-	using Matrix23f = Matrix<float, 2, 3>;
-	using Matrix32f = Matrix<float, 3, 2>;
+	using Matrix13d = Matrix<double, 1, 3>;
+	using Matrix31d = Matrix<double, 3, 1>;
+	using Matrix23d = Matrix<double, 2, 3>;
+	using Matrix32d = Matrix<double, 3, 2>;
 }
 
 /*!
@@ -22,35 +22,35 @@ namespace Eigen {
 class Particle{
 public:
 	Particle();
-	Particle(float w, Vector3f &xv, Matrix3f &Pv, vector<Vector2f> &xf, vector<Matrix2f> &Pf, float* da);
+	Particle(double w, Vector3d &xv, Matrix3d &Pv, vector<Vector2d> &xf, vector<Matrix2d> &Pf, double* da);
 	~Particle();
         
 	//getters	
-	float w() const; ///< importance weight
-	Vector3f xv() const; ///< robot pose: x,y,theta (heading dir)
-	Matrix3f Pv() const; ///< control inputs, i.e. velocities
-	vector<Vector2f> xf() const; ///< 2d means of EKF
-	vector<Matrix2f> Pf() const; ///< covariance matrices for EKF 
+	double w() const; ///< importance weight
+	Vector3d xv() const; ///< robot pose: x,y,theta (heading dir)
+	Matrix3d Pv() const; ///< control inputs, i.e. velocities
+	vector<Vector2d> xf() const; ///< 2d means of EKF
+	vector<Matrix2d> Pf() const; ///< covariance matrices for EKF 
 															 ///< length is equal to seen landmarks at time t
-	float* da() const; ///< "Not sure, it's never used" (taken from readme)
+	double* da() const; ///< "Not sure, it's never used" (taken from readme)
 
 	//setters
-	void setW(float w);
-	void setXv(Vector3f &xv);
-	void setPv(Matrix3f &Pv);
-	void setXf(vector<Vector2f> &xf);
-	void setXfi(int i, Vector2f &vec);
-	void setPf(vector<Matrix2f> &Pf);
-	void setPfi(int i, Matrix2f &m);
-	void setDa(float* da);
+	void setW(double w);
+	void setXv(Vector3d &xv);
+	void setPv(Matrix3d &Pv);
+	void setXd(vector<Vector2d> &xf);
+	void setXdi(int i, Vector2d &vec);
+	void setPf(vector<Matrix2d> &Pf);
+	void setPfi(int i, Matrix2d &m);
+	void setDa(double* da);
 	
 private:
-	float _w;
-	Vector3f _xv;
-	Matrix3f _Pv;		
-	vector<Vector2f> _xf;
-	vector<Matrix2f> _Pf;
-	float* _da;
+	double _w;
+	Vector3d _xv;
+	Matrix3d _Pv;		
+	vector<Vector2d> _xf;
+	vector<Matrix2d> _Pf;
+	double* _da;
 };
 
 #endif //PARTICLES_H

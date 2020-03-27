@@ -35,7 +35,7 @@ using namespace Eigen;
     @param[in]  Q        Covariance matrix of V and G.
     @param[in]  addnoise Flag if control noise should be added.
  */
-void add_control_noise(float V, float G, Matrix2f Q, int addnoise,float* VnGn);
+void add_control_noise(double V, double G, Matrix2d Q, int addnoise,double* VnGn);
 
 
 #endif //ADD_CONTROL_NOISE

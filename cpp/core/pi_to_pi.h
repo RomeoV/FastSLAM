@@ -9,8 +9,8 @@
 using namespace Eigen;
 using namespace std;
 
-void pi_to_pi(VectorXf &angle); //takes in array of floats, returna array 
-float pi_to_pi(float ang);
-//vector<int> find1(VectorXf input);
+void pi_to_pi(VectorXd &angle); //takes in array of doubles, returna array 
+double pi_to_pi(double ang);
+//vector<int> find1(VectorXd input);
 
 #endif //PI_TO_PI_H

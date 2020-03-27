@@ -6,7 +6,7 @@
     Clips all angles in angle (radiants) to range [-pi,pi].
 	@param[out] angle   Vector of angles (radiants).
  */
-void pi_to_pi(VectorXf &angle) 
+void pi_to_pi(VectorXd &angle) 
 {
     int n;
     for (int i=0; i<angle.size(); i++) {
@@ -28,7 +28,7 @@ void pi_to_pi(VectorXf &angle)
     Clips ang  to range [-pi,pi].
 	@param[out] angle   angle in radiants.
  */
-float pi_to_pi(float ang) 
+double pi_to_pi(double ang) 
 {
     int n;
     if ((ang < (-2*pi)) || (ang > (2*pi))) {

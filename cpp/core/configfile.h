@@ -8,30 +8,30 @@
 //******************
 
 namespace config {
-		extern float V;
-		extern float MAXG;
-		extern float RATEG;
-		extern float WHEELBASE;
-		extern float DT_CONTROLS;
+		extern double V;
+		extern double MAXG;
+		extern double RATEG;
+		extern double WHEELBASE;
+		extern double DT_CONTROLS;
 
-		extern float sigmaV;
-		extern float sigmaG;
+		extern double sigmaV;
+		extern double sigmaG;
 
-		extern Eigen::Matrix2f Q;
+		extern Eigen::Matrix2d Q;
 
-		extern float MAX_RANGE;
-		extern float DT_OBSERVE;
+		extern double MAX_RANGE;
+		extern double DT_OBSERVE;
 
-		extern float sigmaR;
-		extern float sigmaB;
+		extern double sigmaR;
+		extern double sigmaB;
 		
-		extern Eigen::Matrix2f R;
+		extern Eigen::Matrix2d R;
 
-		extern float AT_WAYPOINT;
+		extern double AT_WAYPOINT;
 		extern int NUMBER_LOOPS;
 
 		extern unsigned int NPARTICLES;
-		extern float NEFFECTIVE;
+		extern double NEFFECTIVE;
 
 		extern int SWITCH_CONTROL_NOISE;
 		extern int SWITCH_SENSOR_NOISE;

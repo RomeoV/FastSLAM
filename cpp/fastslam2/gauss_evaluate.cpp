@@ -7,27 +7,27 @@
 using namespace std; 
 
 //approximation of the desired sampling distribution. 
-float gauss_evaluate(VectorXf v, MatrixXf S, int logflag) 
+double gauss_evaluate(VectorXd v, MatrixXd S, int logflag) 
 {
     int D = v.size();    
-    MatrixXf Sc = S.llt().matrixL();
+    MatrixXd Sc = S.llt().matrixL();
 
     //normalised innovation
-    VectorXf ni = Sc.jacobiSvd(ComputeThinU | ComputeThinV).solve(v);
+    VectorXd ni = Sc.jacobiSvd(ComputeThinU | ComputeThinV).solve(v);
 
-    float E=0.f;
-    VectorXf nin(ni.size());
+    double E=0.f;
+    VectorXd nin(ni.size());
     for (int s=0; s< ni.size(); s++) {
         nin[s] = ni[s]*ni[s];
     }
     E = -0.5f * nin.sum();
 
     int i,j;
-    float C,w;
+    double C,w;
     unsigned  m = min(Sc.rows(), Sc.cols());
 
     if (logflag !=1) {
-        float prod = 1;
+        double prod = 1;
         for (i=0; i<Sc.rows(); i++) {
             for (j=0; j<Sc.cols(); j++) {
                 if (i==j) {
@@ -39,7 +39,7 @@ float gauss_evaluate(VectorXf v, MatrixXf S, int logflag)
         w = exp(E)/C; //likelihood (exp(E) is targe distribution).
         //C is the proposal distribution
     } else {
-        float sum=0;
+        double sum=0;
         for (i=0; i<m; i++) {
             sum+=log(Sc(i,i)); 
         }

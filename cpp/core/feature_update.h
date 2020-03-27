@@ -20,6 +20,6 @@ using namespace std;
 	@param[out] 	idf 	    Index of known landmarks.
 	@param[out] 	R	 	    Covariance Matrix of measurements.
  */
-void feature_update(Particle &particle, vector<Vector2f> z, vector<int>idf, Matrix2f R);
+void feature_update(Particle &particle, vector<Vector2d> z, vector<int>idf, Matrix2d R);
 
 #endif

@@ -11,4 +11,4 @@
 using namespace Eigen;
 using namespace std;
 
-void read_input_file(const string s, MatrixXf *lm, MatrixXf *wp); 
+void read_input_file(const string s, MatrixXd *lm, MatrixXd *wp); 

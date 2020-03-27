@@ -7,7 +7,7 @@
 
 using namespace Eigen;
 
-void predict(Particle &particle,float V,float G,Matrix2f Q, float WB,float dt, int addrandom);
-float pi_to_pi2(float ang); 
+void predict(Particle &particle,double V,double G,Matrix2d Q, double WB,double dt, int addrandom);
+double pi_to_pi2(double ang); 
 
 #endif //PREDICT_H

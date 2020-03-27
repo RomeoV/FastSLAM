@@ -8,8 +8,8 @@
 using namespace std;
 
 
-void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD, 
-				float& G, float rateG, float maxG, float dt)
+void compute_steering(Vector3d x, MatrixXd wp, int& iwp, double minD, 
+				double& G, double rateG, double maxG, double dt)
 {
 
 		//determine if current waypoint reached
@@ -17,7 +17,7 @@ void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD,
 		cwp[0] = wp(0,iwp); //-1 since indexed from 0     
 		cwp[1] = wp(1,iwp);
 
-		float d2 = pow((cwp[0] - x[0]),2) + pow((cwp[1]-x[1]),2);     
+		double d2 = pow((cwp[0] - x[0]),2) + pow((cwp[1]-x[1]),2);     
 
 		if (d2 < minD*minD) {
 				iwp++; //switch to next
@@ -31,11 +31,11 @@ void compute_steering(Vector3f x, MatrixXf wp, int& iwp, float minD,
 		}
 
 		//compute change in G to point towards current waypoint
-		float deltaG = atan2(cwp[1]-x[1], cwp[0]-x[0]) - x[2] - G;
+		double deltaG = atan2(cwp[1]-x[1], cwp[0]-x[0]) - x[2] - G;
 		deltaG = pi_to_pi(deltaG);
 
 		//limit rate
-		float maxDelta = rateG*dt;
+		double maxDelta = rateG*dt;
 		if (abs(deltaG) > maxDelta) {
 				int sign = (deltaG > 0) ? 1 : ((deltaG < 0) ? -1 : 0);
 				deltaG = sign*maxDelta;	

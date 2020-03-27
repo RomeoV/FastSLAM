@@ -9,8 +9,8 @@ using namespace Eigen;
 using namespace std;
 
 namespace nRandMat{
-	MatrixXf randn(int m, int n); //Gaussian distribution
-	MatrixXf rand(int m, int n); //Standard random
+	MatrixXd randn(int m, int n); //Gaussian distribution
+	MatrixXd rand(int m, int n); //Standard random
 }
 
 /*!
@@ -19,6 +19,6 @@ namespace nRandMat{
     @param[in]  R        	Covariance matrix of observation (diagonal).
     @param[in]  addnoise	Flag if obersvation noise should be added.
  */
-void add_observation_noise(vector<Vector2f> &z, Matrix2f R, int addnoise);
+void add_observation_noise(vector<Vector2d> &z, Matrix2d R, int addnoise);
 
 #endif //ADD_OBSERVATION_NOISE_H

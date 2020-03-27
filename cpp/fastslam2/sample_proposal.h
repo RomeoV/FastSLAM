@@ -13,9 +13,9 @@
 using namespace Eigen;
 using namespace std;
 
-void sample_proposal(Particle &particle, vector<Vector2f> z, vector<int> idf, Matrix2f R);
-//float likelihood_given_xv(Particle particle, MatrixXf z, vector<int>idf, MatrixXf R);
-float likelihood_given_xv(Particle particle, vector<Vector2f> z, vector<int>idf, Matrix2f R); 
-Vector3f delta_xv(Vector3f xv1, Vector3f xv2);
+void sample_proposal(Particle &particle, vector<Vector2d> z, vector<int> idf, Matrix2d R);
+//double likelihood_given_xv(Particle particle, MatrixXd z, vector<int>idf, MatrixXd R);
+double likelihood_given_xv(Particle particle, vector<Vector2d> z, vector<int>idf, Matrix2d R); 
+Vector3d delta_xv(Vector3d xv1, Vector3d xv2);
 
 #endif
