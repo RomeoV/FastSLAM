@@ -77,12 +77,12 @@ void Particle::setPv(Matrix3d &Pv)
 	_Pv = Pv;
 }
 
-void Particle::setXd(vector<Vector2d> &xf)
+void Particle::setXf(vector<Vector2d> &xf)
 {
 	_xf = xf;
 }
 
-void Particle::setXdi(int i, Vector2d &vec) 
+void Particle::setXfi(int i, Vector2d &vec) 
 {
 	if (i >= _xf.size()){
 		_xf.resize(i+1);

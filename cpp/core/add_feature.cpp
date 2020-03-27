@@ -37,7 +37,7 @@ void add_feature(Particle &particle, vector<Vector2d> z, Matrix2d R)
     }	
 
     for(int j=0; j<ii.size(); j++) {
-	particle.setXdi(ii[j],xf[j]);
+	particle.setXfi(ii[j],xf[j]);
     }
 
 

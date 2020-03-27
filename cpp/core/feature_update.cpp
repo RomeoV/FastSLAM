@@ -46,7 +46,7 @@ void feature_update(Particle &particle, vector<Vector2d> z, vector<int>idf, Matr
 	}
 
 	for (int i=0; i<idf.size(); i++) {
-		particle.setXdi(idf[i],xf[i]);
+		particle.setXfi(idf[i],xf[i]);
 		particle.setPfi(idf[i],Pf[i]);
 	}
 }

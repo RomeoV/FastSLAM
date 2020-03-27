@@ -104,7 +104,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 		/* for (int j=0; j< particles[i].xf().size(); j++) { */
 		    /* Vector2d xf_j = particles[i].xf()[j]; */
 		    /* xf_j[2] = xtrue[2]; */
-		    /* particles[i].setXdi(j,xf_j); */	
+		    /* particles[i].setXfi(j,xf_j); */	
 		/* } */           
 	    /* } */
 	}

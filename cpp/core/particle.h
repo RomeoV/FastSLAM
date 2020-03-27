@@ -38,8 +38,8 @@ public:
 	void setW(double w);
 	void setXv(Vector3d &xv);
 	void setPv(Matrix3d &Pv);
-	void setXd(vector<Vector2d> &xf);
-	void setXdi(int i, Vector2d &vec);
+	void setXf(vector<Vector2d> &xf);
+	void setXfi(int i, Vector2d &vec);
 	void setPf(vector<Matrix2d> &Pf);
 	void setPfi(int i, Matrix2d &m);
 	void setDa(double* da);
