@@ -55,6 +55,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 
     double dt = DT_CONTROLS; //change in time btw predicts
     double dtsum = 0; //change in time since last observation
+    double dtsum_total = 0;
 
     vector<int> ftag; //identifier for each landmark
     for (int i=0; i< lm.cols(); i++) {
@@ -91,6 +92,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     while (iwp !=-1) {
 #if WRITE_TRACE
 	std::cerr << "adding another round of particles at waypoint " << iwp << std::endl;
+	/*
 	auto relevant_particles = std::vector<Particle>{};
 	std::copy_if(particles.begin(), particles.end(),
 		     std::back_inserter(relevant_particles),
@@ -100,11 +102,19 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	std::transform(relevant_particles.begin(), relevant_particles.end(),
 		       particle_jsons.begin(), particle_to_json);
 
+       */
+	auto max_particle_iter = std::max_element(particles.begin(), particles.end(), [](auto p_lhs, auto p_rhs) {return p_lhs.w() < p_rhs.w();});
+	particle_trace["timesteps"] += {
+	    {"timestamp", dtsum_total}, 
+	    {"max_particle", particle_to_json(*max_particle_iter)},
+	    {"all_particle_poses", particle_poses_to_json(particles)}
+	/*
 	particle_trace["timesteps"] += {
 	    {"timestamp", dtsum}, 
 	    {"particles", std::accumulate(particle_jsons.begin(), particle_jsons.end(),
 					  nlohmann::json::array(), [](auto lhs, auto rhs) 
 					  {lhs += rhs; return lhs;})}
+					  */
 	};
 #endif
 	compute_steering(xtrue, wp, iwp, AT_WAYPOINT, G, RATEG, MAXG, dt);
@@ -134,6 +144,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 
 	//Observe step
 	dtsum = dtsum+dt;
+	dtsum_total += dt;
 	if (dtsum >= DT_OBSERVE) {
 	    dtsum=0;
 
@@ -180,7 +191,8 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     cout<<"done with all functions and will return particles"<<endl<<flush;
 #if WRITE_TRACE
     std::ofstream of(output_filename);
-    of << std::setw(4) << particle_trace;
+    //of << std::setw(4) << particle_trace;
+    of << particle_trace;
 #endif
     return particles;
 }

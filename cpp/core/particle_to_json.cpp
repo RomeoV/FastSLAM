@@ -12,7 +12,7 @@ namespace {
 	};
 };
 
-auto particle_to_json(const Particle& p) -> nlohmann::json {
+nlohmann::json particle_to_json(const Particle& p) {
     std::vector<std::array<double, 2>> landmark_poses(p.xf().size());
     const auto& xf = p.xf();
     std::transform(xf.begin(), xf.end(), landmark_poses.begin(), Vector2dToStdVec);
@@ -33,5 +33,15 @@ auto particle_to_json(const Particle& p) -> nlohmann::json {
         {"pose", Vector3dToStdVec(p.xv())},
         {"landmark_poses", landmark_poses},
         {"landmark_covs", landmark_covs}
+    };
+}
+
+nlohmann::json particle_poses_to_json(const std::vector<Particle>& p_vec) {
+    std::vector<std::array<double,3>> poses(p_vec.size());
+    std::transform(p_vec.begin(), p_vec.end(),
+		   poses.begin(),
+		   [](auto p){return Vector3dToStdVec(p.xv());});
+    return {
+        {"poses", poses}
     };
 }
