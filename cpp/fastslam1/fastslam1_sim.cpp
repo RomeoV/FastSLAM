@@ -94,7 +94,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	auto relevant_particles = std::vector<Particle>{};
 	std::copy_if(particles.begin(), particles.end(),
 		     std::back_inserter(relevant_particles),
-		     [](auto p){return p.w() > 0.1;});
+		     [](auto p){return p.w() > 0.001;});
 
 	auto particle_jsons = std::vector<nlohmann::json>(relevant_particles.size());
 	std::transform(relevant_particles.begin(), relevant_particles.end(),
