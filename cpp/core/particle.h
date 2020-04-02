@@ -2,7 +2,10 @@
 #define PARTICLES_H
 
 #include <Eigen/Dense>
+#include <iterator>
 #include <vector>
+#include <array>
+#include "core/json.hpp"
 
 using namespace Eigen;
 using namespace std;
@@ -52,5 +55,4 @@ private:
 	vector<Matrix2d> _Pf;
 	double* _da;
 };
-
 #endif //PARTICLES_H

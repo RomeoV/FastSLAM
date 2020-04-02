@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <iomanip>
 
 #include "fastslam1_sim.h"
 #include "core/add_control_noise.h"
@@ -12,11 +13,14 @@
 #include "core/feature_update.h"
 #include "core/resample_particles.h"
 #include "core/add_feature.h"
+#include "core/particle_to_json.h"
 #include "compute_weight.h"
 #include "predict.h"
 
 using namespace config;
 using namespace std;
+
+#define WRITE_TRACE 1
 
 int counter=0;
 vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp) 
@@ -82,8 +86,27 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     vector<int> ftag_visible;
     vector<Vector2d> z; //range and bearings of visible landmarks
 
+    nlohmann::json particle_trace = {"timesteps", nlohmann::json::array()};
     //Main loop
     while (iwp !=-1) {
+#if WRITE_TRACE
+	std::cerr << "adding another round of particles at waypoint " << iwp << std::endl;
+	auto relevant_particles = std::vector<Particle>{};
+	std::copy_if(particles.begin(), particles.end(),
+		     std::back_inserter(relevant_particles),
+		     [](auto p){return p.w() > 0.1;});
+
+	auto particle_jsons = std::vector<nlohmann::json>(relevant_particles.size());
+	std::transform(relevant_particles.begin(), relevant_particles.end(),
+		       particle_jsons.begin(), particle_to_json);
+
+	particle_trace += {
+	    {"timestamp", dtsum}, 
+	    {"particles", std::accumulate(particle_jsons.begin(), particle_jsons.end(),
+					  nlohmann::json::array(), [](auto lhs, auto rhs) 
+					  {lhs += rhs; return lhs;})}
+	};
+#endif
 	compute_steering(xtrue, wp, iwp, AT_WAYPOINT, G, RATEG, MAXG, dt);
 	if (iwp ==-1 && NUMBER_LOOPS > 1) {
 	    iwp = 0;
@@ -155,6 +178,10 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	}
     }
     cout<<"done with all functions and will return particles"<<endl<<flush;
+#if WRITE_TRACE
+    std::ofstream of(output_filename);
+    of << std::setw(4) << particle_trace;
+#endif
     return particles;
 }
 

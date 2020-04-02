@@ -2,12 +2,14 @@
 #define CONFIGFILE_H
 
 #include <Eigen/Dense>
+#include <string>
 
 //******************
 // Global Variables
 //******************
 
 namespace config {
+		extern std::string output_filename;
 		extern double V;
 		extern double MAXG;
 		extern double RATEG;

@@ -6,6 +6,8 @@
 //Permits various adjustments to parameters of the FastSLAM algorithm.
 // See fastslam_sim.h for more information
 
+std::string config::output_filename = "robot_trace.json";
+
 // control parameters
 double config::V= 3.0; // m/s
 double config::MAXG= 30*pi/180; // radians, maximum steering angle (-MAXG < g < MAXG)
