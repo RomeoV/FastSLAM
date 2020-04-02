@@ -86,7 +86,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     vector<int> ftag_visible;
     vector<Vector2d> z; //range and bearings of visible landmarks
 
-    nlohmann::json particle_trace = {"timesteps", nlohmann::json::array()};
+    nlohmann::json particle_trace = {{"timesteps", nlohmann::json::array()}};
     //Main loop
     while (iwp !=-1) {
 #if WRITE_TRACE
@@ -100,7 +100,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	std::transform(relevant_particles.begin(), relevant_particles.end(),
 		       particle_jsons.begin(), particle_to_json);
 
-	particle_trace += {
+	particle_trace["timesteps"] += {
 	    {"timestamp", dtsum}, 
 	    {"particles", std::accumulate(particle_jsons.begin(), particle_jsons.end(),
 					  nlohmann::json::array(), [](auto lhs, auto rhs) 

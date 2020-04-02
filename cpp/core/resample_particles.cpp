@@ -21,6 +21,7 @@ void resample_particles(vector<Particle> &particles, int Nmin, int doresample)
     if (ws == 0) {
         for (int i = 0; i < N; i++) {
             w(i) = 1./N;
+            particles[i].setW(1./N);
         }
         ws = w.sum();
     }
