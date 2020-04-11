@@ -10,6 +10,7 @@
 
 namespace config {
 		extern std::string output_filename;
+		extern std::string ground_truth_filename;
 		extern double V;
 		extern double MAXG;
 		extern double RATEG;

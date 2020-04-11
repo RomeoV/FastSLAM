@@ -16,9 +16,12 @@
 #include "core/particle_to_json.h"
 #include "compute_weight.h"
 #include "predict.h"
-
+#include "core/estimate_json.h"
+#include "core/ground_truth_json.h"
 using namespace config;
 using namespace std;
+
+#include <iostream>
 
 #define WRITE_TRACE 1
 
@@ -85,13 +88,31 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     }
 
     vector<int> ftag_visible;
+	ftag_visible.resize(0);
+
     vector<Vector2d> z; //range and bearings of visible landmarks
 
+	vector<int> idf;
+	int cnt = 0;
+	bool observe=true;
+	int id=0;
+
     nlohmann::json particle_trace = {{"timesteps", nlohmann::json::array()}};
+
+	nlohmann::json ground_truth = {{"timesteps", nlohmann::json::array()}};
+
+	ground_truth.update(ground_truth_keypoints_json(wp, lm));
     //Main loop
+	
     while (iwp !=-1) {
+		cnt++;
+
+		if (cnt==60000) {
+			break;
+		}
+	
 #if WRITE_TRACE
-	std::cerr << "adding another round of particles at waypoint " << iwp << std::endl;
+	//std::cerr << "adding another round of particles at waypoint " << iwp << std::endl;
 	/*
 	auto relevant_particles = std::vector<Particle>{};
 	std::copy_if(particles.begin(), particles.end(),
@@ -101,13 +122,26 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	auto particle_jsons = std::vector<nlohmann::json>(relevant_particles.size());
 	std::transform(relevant_particles.begin(), relevant_particles.end(),
 		       particle_jsons.begin(), particle_to_json);
+	*/
+	//std::cout<<std::fmod(dtsum_total+0.001,DT_OBSERVE)<<" dtsum: "<<dtsum_total<<std::endl;
+	if (observe) {
+		particle_trace["timesteps"] += estimate_step_json(particles, dtsum_total, ftag_visible, da_table, id);
+		observe=false;
+	}
 
-       */
+	ground_truth["timesteps"]+= ground_truth_step_json(xtrue, dtsum_total, id, iwp, G);
+	id++;
+
+
+	/*
 	auto max_particle_iter = std::max_element(particles.begin(), particles.end(), [](auto p_lhs, auto p_rhs) {return p_lhs.w() < p_rhs.w();});
 	particle_trace["timesteps"] += {
 	    {"timestamp", dtsum_total}, 
 	    {"max_particle", particle_to_json(*max_particle_iter)},
 	    {"all_particle_poses", particle_poses_to_json(particles)}
+	*/
+
+
 	/*
 	particle_trace["timesteps"] += {
 	    {"timestamp", dtsum}, 
@@ -115,7 +149,7 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 					  nlohmann::json::array(), [](auto lhs, auto rhs) 
 					  {lhs += rhs; return lhs;})}
 					  */
-	};
+	//};
 #endif
 	compute_steering(xtrue, wp, iwp, AT_WAYPOINT, G, RATEG, MAXG, dt);
 	if (iwp ==-1 && NUMBER_LOOPS > 1) {
@@ -145,7 +179,11 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 	//Observe step
 	dtsum = dtsum+dt;
 	dtsum_total += dt;
+	
+	//std::cout<<dtsum<<" vs. "<<DT_OBSERVE<<std::endl;
 	if (dtsum >= DT_OBSERVE) {
+
+		observe=true;
 	    dtsum=0;
 
 	    //Compute true data, then add noise
@@ -153,6 +191,12 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 
 	    //z is the range and bearing of the observed landmark
 	    z = get_observations(xtrue,lm,ftag_visible,MAX_RANGE);
+
+		/*
+		for (auto elem : z) {
+			std::cout<<elem<<std::endl;
+		}
+		*/
 	    add_observation_noise(z,R,SWITCH_SENSOR_NOISE);
 
 	    if (!z.empty()){
@@ -161,14 +205,17 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 
 	    //Compute (known) data associations
 	    int Nf = particles[0].xf().size();
-	    vector<int> idf;
-	    vector<Vector2d> zf;
+	    //vector<int> idf;
+	    idf.clear();
+		vector<Vector2d> zf;
 	    vector<Vector2d> zn;            
 
 	    bool testflag= false;
 	    data_associate_known(z,ftag_visible,da_table,Nf,zf,idf,zn);
 	    
 	    //perform update
+
+		
 	    for (int i =0; i<NPARTICLES; i++) {
 		if (!zf.empty()) { //observe map features
 		    double w = compute_weight(particles[i],zf,idf,R);
@@ -180,6 +227,10 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
 		    add_feature(particles[i], zn, R);
 		}
 	    }
+
+		
+
+		
 
 	    resample_particles(particles,NEFFECTIVE,SWITCH_RESAMPLE);
 
@@ -193,6 +244,11 @@ vector<Particle> fastslam1_sim(MatrixXd lm, MatrixXd wp)
     std::ofstream of(output_filename);
     //of << std::setw(4) << particle_trace;
     of << particle_trace;
+
+
+	std::ofstream of_gt(ground_truth_filename);
+    //of << std::setw(4) << particle_trace;
+    of_gt << ground_truth;
 #endif
     return particles;
 }
