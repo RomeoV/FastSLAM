@@ -4,6 +4,7 @@
 #include <Eigen/Dense>
 #include "core/particle.h"
 #include "core/multivariate_gauss.h"
+#include "core/pi_to_pi.h"
 
 using namespace Eigen;
 
@@ -19,13 +20,5 @@ using namespace Eigen;
     @param[in]  addrandom        0/1, if sampling from predict noise, for fs1 usually true/1
  */
 void predict(Particle &particle,double V,double G,Matrix2d Q, double WB,double dt, int addrandom);
-
-/*!
-    Brings the angle to a range between -pi and +pi. If the angle is greater than 180 degrees,
-    then we subtract 360 degrees (2pi), the same if it is smaller than -180 degrees.
-    @param[out] return the modified angle in radians
-    @param[in]  ang     angle in radians
- */
-double pi_to_pi2(double ang); 
 
 #endif //PREDICT_H

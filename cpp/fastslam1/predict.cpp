@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-#define pi 3.1416
+#define pi M_PI
 
 using namespace std;
 
@@ -24,18 +24,6 @@ void predict(Particle &particle,double V,double G,Matrix2d Q, double WB,double d
 	Vector3d xv_temp(3);
 	xv_temp << xv(0) + V*dt*cos(G+xv(2)),
 			xv(1) + V*dt*sin(G+xv(2)),
-			pi_to_pi2(xv(2) + V*dt*sin(G/WB));
+			pi_to_pi(xv(2) + V*dt*sin(G)/WB);
 	particle.setXv(xv_temp);
 }
-
-double pi_to_pi2(double ang) 
-{
-	if (ang > pi) {
-		ang = ang - (2*pi);
-	}
-	if (ang < -pi) {
-		ang = ang + (2*pi);
-	}
-	return ang;
-}
-
