@@ -20,13 +20,15 @@ nlohmann::json estimate_step_json(const std::vector<Particle>& p_vec, double tim
     const int num_landmarks = static_cast<int>(p_vec.at(0).xf().size());;
     Eigen::MatrixXd lms, lm_covs;
     lms.resize(2,num_landmarks);
+    Eigen::MatrixXd lm_particles(p_vec.size(),2*num_landmarks);
     lm_covs.resize(2,2*num_landmarks);
     x.setZero();
     cov.setZero();
     lms.setZero();
     lm_covs.setZero();
-    std::vector<double> w;
 
+    int i = 0;
+    const int num_particles = p_vec.size();
     for (auto part : p_vec) {
         sum_w+=part.w();
         x=x+part.xv() * part.w();
@@ -35,9 +37,22 @@ nlohmann::json estimate_step_json(const std::vector<Particle>& p_vec, double tim
         particle_poses.push_back(Vector3dToStdVec(part.xv()));
         for (int j = 0; j<num_landmarks;j++) {
             lms.col(j) += part.xf().at(j) * part.w();
-            lm_covs.block<2,2>(0,2*j)+=part.Pf().at(j) * part.w();
+            //lm_covs.block<2,2>(0,2*j)+=part.Pf().at(j) * part.w();
+            lm_particles.block<1,2>(i,2*j) = part.xf().at(j).transpose();
         }
+        i++;
     }
+    //Eigen::VectorXd weight_vec(weights.data());
+    Eigen::VectorXd weight_vec = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(weights.data(), weights.size());
+    Eigen::MatrixXd weights_diagonal = weight_vec.asDiagonal();
+    for(int j = 0; j<num_landmarks;j++){
+        MatrixXd centered = lm_particles.block(0,2*j,num_particles,2).rowwise() - lms.col(j).transpose();//lm_particles.block(0,2*j,num_particles,2).colwise().mean();
+        Matrix2d covariance = ((centered.transpose() * weights_diagonal) * centered) / sum_w;
+        lm_covs.block<2,2>(0,2*j) = covariance;
+    }
+    
+    
+    
     lms = lms/sum_w;
     lm_covs = lm_covs / sum_w;
     std::vector<std::array<double,2>> visible_landmark_poses;
