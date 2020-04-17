@@ -34,13 +34,12 @@ double pi_to_pi(double ang)
     if ((ang < (-2*pi)) || (ang > (2*pi))) {
         n=floor(ang/(2*pi));
         ang = ang-n*(2*pi);    
-
-        if (ang > pi) {
-            ang = ang - (2*pi);
-        }
-        if (ang < -pi) {
-            ang = ang + (2*pi);
-        }
+    }
+    if (ang > pi) {
+        ang = ang - (2*pi);
+    }
+    if (ang < -pi) {
+        ang = ang + (2*pi);
     }
     return ang;
 }
