@@ -5,3 +5,4 @@ test/**/*
 exec
 build*
 .DS_Store
+*.json
