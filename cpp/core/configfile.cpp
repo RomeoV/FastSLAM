@@ -1,6 +1,6 @@
 #include "configfile.h"
-
-#define pi 3.14159265
+#include <math.h>
+#define pi M_PI
 
 // Configuration file
 //Permits various adjustments to parameters of the FastSLAM algorithm.
@@ -12,8 +12,8 @@ std::string config::ground_truth_filename = "ground_truth.json";
 
 // control parameters
 double config::V= 3.0; // m/s
-double config::MAXG= 30*pi/180; // radians, maximum steering angle (-MAXG < g < MAXG)
-double config::RATEG= 20*pi/180; // rad/s, maximum rate of change in steer angle
+double config::MAXG= 30.0*pi/180; // radians, maximum steering angle (-MAXG < g < MAXG)
+double config::RATEG= 20.0*pi/180; // rad/s, maximum rate of change in steer angle
 double config::WHEELBASE= 4.; // metres, vehicle wheel-base
 double config::DT_CONTROLS= 0.025; // seconds, time interval between control signals
 
@@ -25,7 +25,7 @@ Eigen::Matrix2d config::Q(2,2);
 
 // observation parameters
 double config::MAX_RANGE= 30.0; // metres
-double config::DT_OBSERVE= 8* config::DT_CONTROLS; // seconds, time interval between observations
+double config::DT_OBSERVE= 8.0* config::DT_CONTROLS; // seconds, time interval between observations
 
 // observation noises
 double config::sigmaR= 0.1; // metres

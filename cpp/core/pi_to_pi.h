@@ -4,7 +4,8 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <math.h>
-#define pi 3.1416
+
+#define pi M_PI
 
 using namespace Eigen;
 using namespace std;
