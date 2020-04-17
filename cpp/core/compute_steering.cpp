@@ -13,27 +13,28 @@ void compute_steering(Vector3d x, MatrixXd wp, int& iwp, double minD,
 {
 
 		//determine if current waypoint reached
-		Vector2d cwp;
-		cwp[0] = wp(0,iwp); //-1 since indexed from 0     
-		cwp[1] = wp(1,iwp);
+		Eigen::Vector2d cwp = wp.col(iwp);
+		//cwp[0] = wp(0,iwp); //-1 since indexed from 0     
+		//cwp[1] = wp(1,iwp);
 
-		double d2 = pow((cwp[0] - x[0]),2) + pow((cwp[1]-x[1]),2);     
+		double d2 = pow((cwp(0) - x(0)),2) + pow((cwp(1)-x(1)),2); //good    
 
-		if (d2 < minD*minD) {
+		if (d2 < minD*minD) { 
 				iwp++; //switch to next
 				if (iwp >= wp.cols()) {
 				    iwp =-1;
 				    return;	
 				}
-
-				cwp[0] = wp(0,iwp); //-1 since indexed from 0
-				cwp[1] = wp(1,iwp);
+				cwp = wp.col(iwp);
+				//cwp[0] = wp(0,iwp); //-1 since indexed from 0
+				//cwp[1] = wp(1,iwp);
 		}
 
 		//compute change in G to point towards current waypoint
-		double deltaG = atan2(cwp[1]-x[1], cwp[0]-x[0]) - x[2] - G;
+		double deltaG = std::atan2(cwp(1)-x(1), cwp(0)-x(0)) - x(2) - G;
+		//std::cout<<deltaG<<std::endl;
 		deltaG = pi_to_pi(deltaG);
-
+		//std::cout<<deltaG<<std::endl;
 		//limit rate
 		double maxDelta = rateG*dt;
 		if (abs(deltaG) > maxDelta) {
